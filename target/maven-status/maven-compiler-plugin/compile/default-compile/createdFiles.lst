@@ -1,2 +1,4 @@
+com\info\model\Customer.class
 com\info\controller\HelloWorldController.class
 com\info\HelloWorldSpringbootApp.class
+com\info\repo\CustomerRepository.class
