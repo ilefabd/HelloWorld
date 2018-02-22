@@ -17,7 +17,6 @@ import com.info.repo.CustomerRepository;
 
 @RestController
 public class HelloWorldController {
-	@Autowired
 	CustomerRepository repository;
 	
 	@RequestMapping("/save")
@@ -62,12 +61,22 @@ public class HelloWorldController {
 		return result;
 	}
 	
-
-
-
-
-
-
+@RequestMapping("/delete")
+public String deleteById(@RequestParam("id") long id) {
+	String result ="";
+	repository.delete(id);
+	return result="done";
+	
+}
+@RequestMapping("update")
+public String update(@RequestParam("id") long id) {
+	
+Customer c = repository.findOne(id);
+c.setFirstName("dada");
+c.setLastName("bouazzi");
+repository.save(c);
+return "done";
+}
 
 
 
