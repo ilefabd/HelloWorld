@@ -53,6 +53,14 @@
 								class="validation-message"></label>
 						</div>
 					</div>
+						<div class="form-group">
+						<div class="col-sm-9">
+							<input type="text" th:field="*{organisation}" placeholder="Organisation"
+								class="form-control" /> <label
+								th:if="${#fields.hasErrors('organisation')}" th:errors="*{organisation}"
+								class="validation-message"></label>
+						</div>
+					</div>
 
 					<div class="form-group">
 						<div class="col-sm-9">

@@ -1,0 +1,68 @@
+
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Demande Ressources</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+</head>
+<body>
+	
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<form autocomplete="off" action="#" th:action="@{/demande}"
+					th:object="${demande}" method="post" class="form-horizontal"
+					role="form">
+					<h2>Demande Ressources</h2>
+					<div class="form-group">
+						<div class="col-sm-9">
+				 <h3>Prefix</h3>		<label th:if="${#fields.hasErrors('prefix')}" th:errors="*{prefix}"
+								class="validation-message"></label>
+					 <select th:field="*{prefix}">
+					 <option value="--">-- </option>
+					 
+                     <option value="/24">/24 </option>
+                     
+                     <option value="/14">/14</option>
+                     <option value="/16">16</option>
+                      <option value="/12">/12</option>
+                     
+                  </select>
+						</div>
+					</div>
+
+
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+					 <h2>Technologie</h2>	<label th:if="${#fields.hasErrors('technologie')}" th:errors="*{technologie}"
+								class="validation-message"></label>
+				 <select th:field="*{technologie}">
+					
+                  </select>
+						</div>
+					</div>
+					
+					
+
+					<div class="form-group">
+						<div class="col-sm-9">
+							<button type="submit" class="btn btn-primary btn-block">Envoyer</button>
+						</div>
+					</div>
+					
+					<span th:utext="${successMessage}"></span>
+					
+					
+				</form>
+			</div>
+		</div>
+	</div>
+
+</body>
+</html>
