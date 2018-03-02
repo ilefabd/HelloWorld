@@ -10,7 +10,10 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -96,20 +99,28 @@ public class DemandeResourceController {
         System.out.println("===================tECHNOLOGIE LIST:==================");
         technologieLst.forEach(System.out::println);
     }
+	
+	// show prefix
+	    @RequestMapping(value="/allprefix" , method = RequestMethod.GET)
+	    @ModelAttribute("prefixLst")
+		private ModelAndView prefixLst( ModelAndView model){
+	    	// get All data
+	    	List<Prefix> prefixLst = (List<Prefix>) repository.findAll();
+           model.addObject("prefixLst",prefixLst);
+	    		return model ;
+	   
+	    
+	    }
+	    
+		
+	
+	
+	
+	
+	
 	//--------------------------------Demande en cours ----------------------------------------//
 	
 	
-	//Afficher la liste de demandes
-	@RequestMapping("/demande/findall")
-	public String findAllDemande(){
-		String result = "";
-		
-		for(DemandeEnCours pre : demanderepo.findAll()){
-			result += pre.toString() + "<br>";
-		}
-		
-		return result;
-	}
 	
 	//Save une demande 
 	@RequestMapping("/demandeR/save")
@@ -134,11 +145,18 @@ public class DemandeResourceController {
 	
 	//Demand View 
 		@RequestMapping(value="/demande", method = RequestMethod.GET )
+	    @ModelAttribute("prefixLst")
 		public ModelAndView demandeResource(){
 			ModelAndView modelAndView = new ModelAndView();
+	    	List<Prefix> prefixLst = (List<Prefix>) repository.findAll();
+	    	List<Technologie> technooLst = (List<Technologie>) techrepository.findAll();
+
 			DemandeEnCours demande = new DemandeEnCours();
 			modelAndView.addObject("demande", demande);
-			modelAndView.setViewName("demande");
+			modelAndView.addObject("prefixLst",prefixLst);
+			modelAndView.addObject("technooLst",technooLst);
+
+			modelAndView.setViewName("technical/demande");
 			return modelAndView;
 		}
 	
@@ -149,7 +167,7 @@ public class DemandeResourceController {
 		    userService.savedemande(demande ,request);
 			modelAndView.addObject("successMessage", "demande has been registered successfully");
 			modelAndView.addObject("demande", new DemandeEnCours());
-			modelAndView.setViewName("demande");
+			modelAndView.setViewName("technical/demande");
 			
 		
 		return modelAndView;
@@ -159,13 +177,33 @@ public class DemandeResourceController {
 
 		//--------------------------------Response----------------------------------------//
 	
-	//create new response 
-	@RequestMapping(value = "/response", method = RequestMethod.POST)
+		//--------------------------------afficher la liste response ----------------------------------------//
+		
+		
+		//Afficher la liste de demandes
+		@RequestMapping(value="/response" , method=RequestMethod.GET)
+	    @ModelAttribute("Listdemande")
+		public ModelAndView findAllDemande(){
+			ModelAndView modelAndView = new ModelAndView();
+
+			List<DemandeEnCours> Listdemande = (List<DemandeEnCours>) demanderepo.findAll();
+			modelAndView.addObject("Listdemande", Listdemande);
+			modelAndView.setViewName("admin/Listdemande");
+
+			return modelAndView ;
+		}
+	//update demande and cretae new  response 
+	@RequestMapping(value = "/demande/edit/{id}", method = RequestMethod.GET)
     @ResponseBody
-    public String SaveResponse(Response response) {
-       
-		userService.repondredemande(response);
-		return "done";
+    public ModelAndView SaveResponse(Response response,@ModelAttribute("demande") DemandeEnCours demande ) {
+		ModelAndView modelAndView = new ModelAndView();
+
+		userService.repondredemande(response,demande);
+		List<DemandeEnCours> Listdemande = (List<DemandeEnCours>) demanderepo.findAll();
+		modelAndView.addObject("Listdemande", Listdemande);
+		modelAndView.setViewName("admin/Listdemande");
+
+		return modelAndView;
 	}
 	
 	

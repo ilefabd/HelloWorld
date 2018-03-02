@@ -14,8 +14,8 @@ public interface UserService {
 	public void saveUser(User user);
 	public void saveFinacier(User user);
 	public void savedemande(DemandeEnCours demande ,HttpServletRequest request);
-	public void repondredemande(Response response);
 	public void saveTechnical(User user);
+	void repondredemande(Response response, DemandeEnCours demande);
 
 
 }

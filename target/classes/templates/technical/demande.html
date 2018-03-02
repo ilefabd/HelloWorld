@@ -1,7 +1,9 @@
 
 <!DOCTYPE html>
+
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
+	
 <head>
 	<title>Demande Ressources</title>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
@@ -18,37 +20,38 @@
 				<form autocomplete="off" action="#" th:action="@{/demande}"
 					th:object="${demande}" method="post" class="form-horizontal"
 					role="form">
-					<h2>Demande Ressources</h2>
+					
+					
+					
+						<h2>Demande Ressources</h2>
+					
 					<div class="form-group">
-						<div class="col-sm-9">
-				 <h3>Prefix</h3>		<label th:if="${#fields.hasErrors('prefix')}" th:errors="*{prefix}"
-								class="validation-message"></label>
-					 <select th:field="*{prefix}">
-					 <option value="--">-- </option>
-					 
-                     <option value="/24">/24 </option>
-                     
-                     <option value="/14">/14</option>
-                     <option value="/16">16</option>
-                      <option value="/12">/12</option>
-                     
-                  </select>
-						</div>
-					</div>
-
+					
+									
+					 <label class="col-sm-2 control-label" for="prefix">Prefix</label> 
+					 <div class="col-sm-6 col-xs-12">
+					  <select th:field="*{prefix}"> 
+					  <option value="">Select...</option> 
+					  
+					  <option th:each="c : ${prefixLst}" th:value="${c.id}" th:text="${c.prefix}">
+					  </option> </select> </div> </div>
 
 					
 					<div class="form-group">
-						<div class="col-sm-9">
-					 <h2>Technologie</h2>	<label th:if="${#fields.hasErrors('technologie')}" th:errors="*{technologie}"
-								class="validation-message"></label>
-				 <select th:field="*{technologie}">
+					 <label class="col-sm-2 control-label" for="technologie">Technologie</label> 
+					 <div class="col-sm-6 col-xs-12">
+					  <select  th:field="*{technologie}"  > 
+					  <option value="">Select...</option> 
+					  <option th:each="c : ${technooLst}" th:value="${c.id}" th:text="${c.technologie}">
+					  </option> </select> </div> </div>
+
 					
-                  </select>
-						</div>
-					</div>
-					
-					
+					<div class="form-group">
+					 <label class="col-sm-2 control-label" for="description">Description</label> 
+					 <div class="col-sm-6 col-xs-12">
+					<textarea rows="4" cols="50"  th:field="*{description}"  >
+					</textarea></div> </div>
+
 
 					<div class="form-group">
 						<div class="col-sm-9">

@@ -9,6 +9,11 @@ import javax.servlet.http.HttpServletRequest;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.info.model.DemandeEnCours;
 import com.info.model.Prefix;
@@ -79,19 +84,16 @@ public class UserServiceImpl implements UserService{
 	        String email = principal.getName();
 	        User user =  userRepository.findByEmail(email)  ;
             String org = user.getOrganisation();
-		    //select prefix
-            Prefix p = prefixrepository.findById((long) 1); 
-            //select technologie
-		    Technologie t = techrepository.findById((long)7);
-			//add demmand
-		    demande.setPrefix(p.getPrefix());
-			demande.setTechnologie(t.getTechnologie());
+		  
+           
+		    demande.setPrefix(demande.getPrefix());
+			demande.setTechnologie(demande.getTechnologie());
 			demande.setDate(new Date());
-			demande.setPrefi(p)	;
-			demande.setTech(t);
+			demande.setPrefi(demande.getPrefi())	;
 			demande.setOrganisation(org);
 			demande.setStatus("EN COURS");
 			demande.setEmail(email);
+			demande.setDescription(demande.getDescription());
 			//save demand
 			demanderepo.save(demande);
 	}
@@ -99,16 +101,16 @@ public class UserServiceImpl implements UserService{
 	
 	//add response for demand 
 	@Override
-	public void repondredemande(Response response) {
+	public void repondredemande(Response response ,@ModelAttribute("demande") DemandeEnCours demande) {
 		//get demand by id 
-      DemandeEnCours d = demanderepo.findOne((long) 27); 
+       DemandeEnCours d= demanderepo.findOne(demande.getId() ); 
       //set status of demand
       d.setStatus("demande traitée");
       //add response
       response.setId_demande(d.getId());
       response.setOrganisation(d.getOrganisation());
       response.setResponse("votre demande est acceptée");
-      //save reqponse
+      //save response
      responserepository.save(response);
       
 	}

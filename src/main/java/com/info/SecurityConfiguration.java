@@ -28,15 +28,22 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Value("${spring.queries.roles-query}")
 	private String rolesQuery;
 
+	@Autowired
+	private SimpleAuthenticationSuccessHandler successHandler;
+	
+
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth)
 			throws Exception {
 		auth.
-			jdbcAuthentication()
-				.usersByUsernameQuery(usersQuery)
-				.authoritiesByUsernameQuery(rolesQuery)
-				.dataSource(dataSource)
-				.passwordEncoder(bCryptPasswordEncoder);
+		jdbcAuthentication()
+			.usersByUsernameQuery(usersQuery)
+			.authoritiesByUsernameQuery(rolesQuery)
+			.dataSource(dataSource)
+			.passwordEncoder(bCryptPasswordEncoder);
+	
+	
+		
 	}
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
@@ -47,13 +54,14 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.antMatchers("/login").permitAll()
 			.antMatchers("/prefix/**").permitAll()
 			.antMatchers("/technologie/**").permitAll()
+			.antMatchers("/home").permitAll()
 			.antMatchers("/registration/**").permitAll()
 			.antMatchers("/admin/**").hasAuthority(rolesQuery="ADMIN")
-			.and().authorizeRequests().antMatchers("/technical/home").hasAuthority(rolesQuery="technicien")
+			.and().authorizeRequests().antMatchers("/technical/**").hasAuthority(rolesQuery="technicien")
 			
 			.and().authorizeRequests().antMatchers("/financier/**").hasAuthority(rolesQuery="Financier")
 			.and()
-			.formLogin()
+			.formLogin().successHandler(successHandler)
 			.loginPage("/login").failureUrl("/login?error=true")
 			.usernameParameter("email")
 			.passwordParameter("password")

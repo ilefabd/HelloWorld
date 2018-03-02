@@ -1,23 +1,24 @@
 package com.info.controller;
 
 import java.security.Principal;
-import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.stereotype.Controller;
+
+import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.view.RedirectView;
 
-import com.info.model.DemandeEnCours;
 import com.info.model.User;
 import com.info.repo.UserRepository;
 import com.info.service.UserService;
@@ -31,15 +32,15 @@ public class LoginController {
 	
 	@Autowired
 	UserRepository userRepository ;
+	
 	//--------------------------------Login View----------------------------------------//
 
-	@RequestMapping(value={"/", "/login"}, method = RequestMethod.GET)
-	public ModelAndView login(){
-		ModelAndView modelAndView = new ModelAndView();
-		modelAndView.setViewName("login");
-		return modelAndView;
-	}
-	
+		@RequestMapping(value={"/","/login"}, method = RequestMethod.GET)
+		public ModelAndView login(){
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("login");
+			return modelAndView;
+		}
 	//-------------------------------- registration view ----------------------------------------//
 
 	@RequestMapping(value="/registration", method = RequestMethod.GET)
@@ -133,19 +134,41 @@ public class LoginController {
 		}
 		return modelAndView;
 	}
+	
+	@RequestMapping(value="/gotoNextPage",method = RequestMethod.GET)
+	public  ModelAndView gotoNextPage(HttpServletRequest request, HttpServletResponse response){
+	    System.out.println("Inside gotoNextPage!!!!!!");
+
+	    ModelMap model = new ModelMap();
+	    model.addAttribute("message", "next page");
+	    
+	    Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		User user = userService.findUserByEmail(auth.getName());
+	    return new ModelAndView(
+	       new RedirectView("/technical/home", true),
+	       //or new RedirectView("/nextpage.html", true),
+	       model
+	    );
+	
+	
+	}
 	//-------------------------------- admin home view ----------------------------------------//
 
-	@RequestMapping(value="/admin/home", method = RequestMethod.GET)
-	public ModelAndView home(){
-		ModelAndView modelAndView = new ModelAndView();
-		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
-		User user = userService.findUserByEmail(auth.getName());
-		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-		modelAndView.addObject("adminMessage","Content Available Only for Users with Admin Role");
-		modelAndView.setViewName("admin/home");
-		System.out.println(user.getRoles().toString());
-		return modelAndView;
-	}
+		@RequestMapping(value="/admin/home", method = RequestMethod.GET)
+		public ModelAndView home(){
+			ModelAndView modelAndView = new ModelAndView();
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			User user = userService.findUserByEmail(auth.getName());
+			modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
+			modelAndView.addObject("finanMessage","Content Available Only for ADMIN with fin Role");
+			 return  modelAndView;
+				      
+			
+			
+			
+			
+		}
+	
 	
 	//-------------------------------- financier home view ----------------------------------------//
 
@@ -192,7 +215,6 @@ public class LoginController {
          String org = user.getLastName();
         return  name + org ;
 	}
-	
 	
 	
 	}		
