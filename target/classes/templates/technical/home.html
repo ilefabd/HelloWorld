@@ -3,41 +3,78 @@
 	xmlns:th="http://www.thymeleaf.org">
 
 <head>
-<title>Technical Page</title>
+	<title>Technical Home</title>
+
 <link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
 <script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
 <script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+ <link th:href="@{/assets/pages/css/profile.min.css}" rel="stylesheet" type="text/css" />
+ <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+  	  	<object th:include="/fragment/head :: head" th:remove="tag"></object>
+  	
+  
 </head>
 
-<body>
+<body class="page-container-bg-solid">
+  	        <div th:include="/fragment/topmenuheader :: header"></div>
+<div class="container">
+  	 
+  	 <div class="row">
   
-	
-	<div class="container">
-	<form th:action="@{/demande}" method="get">
-			<button class="btn btn-md btn-danger btn-block" name="demande"
-				type="Submit">envoyer une demande</button>
-		</form>
-		<form th:action="@{/logout}" method="get">
-			<button class="btn btn-md btn-danger btn-block" name="registration"
-				type="Submit">Logout</button>
-		</form>    
+		<aside id="aside" class="col-md-3">
+				<div class="panel-group" style="margin-top:20px" >
+					<div class="panel panel-primary">
 		
-		<form th:action="@{/demande}" method="get">
-		<button class="btn btn-md btn-warning btn-block" type="Submit">Envoyer une demande</button>
-	</form>	
-		<div class="panel-group" style="margin-top:40px">
-			<div class="panel panel-primary">
-				<div class="panel-heading">
-					<span th:utext="${userName}"></span>
-				</div>
-				<div class="panel-body">
-					<img th:src="@{/images/beer.jpg}" class="img-responsive center-block" width="400" height="400" alt="Beer" /> 
-				</div>
-				<p class="admin-message-text text-center" th:utext="${techniMessage}"></p>
-			</div>
-		</div>
+							<div class="widget">
+								<div class="widget-search">
+									<input class="search-input" type="text" placeholder="whois">
+									<button class="search-btn" type="button"><i class="fa fa-search"></i></button>
+								</div>
+							</div>
+							
+							<div class="widget">
+							
+								<h3 class="title">Options</h3>
+								<div class="widget-category">
+										 
+								
+							 		<a th:href="@{/demande}">Envoyer une demande IP[]</a>
+									<a th:href="@{/ticket/ajouter}">Envoyer une Reclamation</a>
+									<a th:href="@{/demande/status}">Gestion des demandes [IP]</a>
+									
+									<a href="#service">Actualités</a>
+									
+							  	</div>
+							</div>
+					</div>
+			</div><!-- panel -->
+		
+		 </aside><!-- aside -->
+	<div class="container">
+	
+	
+		<main id="main" class="col-md-9">
+						<div class="panel-group" style="margin-top:20px">
+			
+			
+								<div class="panel panel-primary">
+									<div class="panel-heading">
+										<i class="glyphicon glyphicon-user" style="font-size:24px;color:blue;"></i><span th:utext="${userName}"></span>
+										<p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
+					
+									</div>
+
+		
+								</div>	
+						</div>
+		</main>
 		
 	</div>
+	</div>
+	</div>
+		        <div th:include="/fragment/homefooter :: footer"></div>
+	
 </body>
 </html>

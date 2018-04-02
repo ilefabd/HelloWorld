@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Registration Form</title>
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	  	<object th:include="fragment/head :: head" th:remove="tag"></object>
+  	
+</head>
+<body>
+			        <div th:include="fragment/topmenuheader :: header"></div>
+			        	<!-- Search -->
+					
+		<div class="container">
+		
+		<div class="row">
+						<aside id="aside" class="col-md-3">
+				
+					
+					
+		<div class="panel-group" style="margin-top:20px">
+																<a th:href="@{/admin/home}"><img th:src="@{/img/home.png}"  ></a>
+			
+				
+				
+					
+					
+					
+					
+						<ul class="main-nav nav navbar-nav ">
+					
+					
+					<li class="has-dropdown"><a>Ajouter une nouvelle ressource IP </a>
+						<ul class="dropdown">
+							<li><a th:href="@{/ip/ajouter}" > IPV4 </a></li>
+							<li><a th:href="@{/ip/ajouter}" > IPV6 </a></li>
+							
+							
+							
+						</ul>
+					</li>
+				</ul>	
+						
+						
+						
+					
+					
+					<!-- Options -->
+					
+	
+</div>
+				</aside>
+	
+			<div class="col-md-9">
+				<form autocomplete="off" action="#" th:action="@{/ip/{id}/}"
+					th:object="${iprange}" method="get" class="form-horizontal"
+					role="form">
+					
+					<h3>Les ressources disponibles</h3>
+					<table class="table " >
+					
+				    <tr>
+				    										
+				    					<th>Id</th>	
+										<th>IP-RANGE</th>	
+										<th>Range</th>
+						
+					</tr>                  
+					<tr th:each="c : ${Listip}" >
+ 
+					                 	<td th:text="${c.id}" th:value="${c.id}" th:field="*{id}"></td>
+					                    										
+										<td th:text="${c.iprange}" th:value="${c.iprange}" th:field="*{iprange}"></td>
+									  <td th:text="${c.range}" th:value="${c.range}" th:field="*{range}"></td>
+										
+						<td>
+													<a th:href="@{'/ip/delete/' + ${c.id}}">delete</a>
+						
+						    </td>
+					
+					
+					</tr>
+					
+					</table>
+					
+					
+					
+					
+				</form>
+			</div>
+		</div>
+	</div>
+
+		        <div th:include="/fragment/homefooter :: footer"></div>
+
+</body>
+</html>

@@ -5,8 +5,7 @@ import java.io.Serializable;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 
-import com.info.model.Prefix;
-import com.info.model.Technologie;
+ import com.info.model.Technologie;
 @Repository("technologierepository")
 public interface TechnologieRepository extends CrudRepository<Technologie, Serializable> {
 

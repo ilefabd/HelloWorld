@@ -2,22 +2,65 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Registration Form</title>
+	<title>la liste des demandes </title>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	  	<object th:include="/fragment/head :: head" th:remove="tag"></object>
+  	
 </head>
 <body>
+			        <div th:include="/fragment/topmenuheader :: header"></div>
 		
 	
 	<div class="container">
 		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
-				<form autocomplete="off" action="#" th:action="@{/response}"
-					th:object="${demande}" method="post" class="form-horizontal"
+						<aside id="aside" class="col-md-3">
+		<div class="panel-group" style="margin-top:20px">
+
+					<!-- Search -->
+					<div class="widget">
+						<div class="widget-search">
+							<a th:href="@{/admin/home}"><img th:src="@{/img/home.png}"  ></a>
+						
+							<input class="search-input" type="text" placeholder="whois">
+							<button class="search-btn" type="button"><i class="fa fa-search"></i></button>
+						</div>
+					</div>
+					<!-- /Search -->
+
+					<!-- Options -->
+					
+					<div class="widget">
+					
+						<h3 class="title">Options</h3>
+						<div class="widget-category">
+						
+						<ul class="dropdown">
+			         <li class="has-dropdown"><a href="#blog">Blog</a>
+						
+							<li><a th:href="@{/blog}" >blog post</a></li>
+						</ul>
+					
+					 		<a th:href="@{/resourcesnondispo}"> les ressources affectées</a>
+					 		
+							<a th:href="@{/demandetraitée}">la liste des demandes traitées</a>
+							
+							
+							</div>
+						</div>
+					</div>
+					<!-- Options -->
+					
+	
+
+				</aside>
+			<div class="col-md-9">
+				<form autocomplete="off" action="#" th:action="@{/demande/status}"
+					th:object="${demande}" method="get" class="form-horizontal"
 					role="form">
-					<h2>Resourses List</h2>
+					<h3>la liste des demandes </h3>
 					<table class="table table-striped">
 					
 				    <tr>
@@ -31,16 +74,16 @@
 											
 						
 					</tr>                  
-					<tr th:each="c : ${Listdemande}" >
-					                 	<td th:text="${c.id}"  th:field="*{id}"></td>
+					<tr th:each="d : ${Listdemande}" >
+					                 	<td th:text="${d.id}" th:value="${d.id}" th:field="*{id}"></td>
 					                    										
-										<td th:text="${c.email}"></td>
-										<td th:text="${c.organisation}"></td>
-										<td th:text="${c.prefix}"></td>
-										<td th:text="${c.technologie}"></td>
-										<td th:text="${c.status}"></td>
+										<td th:text="${d.email}"></td>
+										<td th:text="${d.organisation}"></td>
+										<td th:text="${d.prefix}"></td>
+										<td th:text="${d.technologie}"></td>
+										<td th:text="${d.status}"></td>
 					        <td>
-							<a th:href="@{'/demande/edit/' + ${c.id}}">Répondre</a>
+							<a  th:href="@{'/iprangelist/' + ${d.id}}">Répondre</a>
 						    </td>
 					
 					
@@ -55,6 +98,8 @@
 			</div>
 		</div>
 	</div>
+	
+		        <div th:include="/fragment/homefooter :: footer"></div>
 
 </body>
 </html>

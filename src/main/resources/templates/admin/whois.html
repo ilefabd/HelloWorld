@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Ajouter Iprange</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	  	<object th:include="fragment/head :: head" th:remove="tag"></object>
+  	
+</head>
+<body>
+	        <div th:include="/fragment/topmenuheader :: header"></div>
+
+	
+	<div class="container">
+		<div class="row">
+		
+						<aside id="aside" class="col-md-3">
+				
+		<div class="panel-group" style="margin-top:20px">
+		
+					<!-- Search -->
+					<div class="widget">
+						<div class="widget-search">
+						<a th:href="@{/admin/home}"><img th:src="@{/img/home.png}"  ></a>
+				<label class="form-control"   th:text="${org}"  th:name = "orgres" th:type = "text" th:id = "${org}" 
+				th:value ="${org}" placeholder="whois">
+						
+					</label>		
+						</div>
+						
+						
+						<table class="table table-striped">
+					
+				    <tr>
+				    					<th>IP_Range</th>	
+				    										
+				    					<th>Organisation</th>	
+				    					
+										<th>Email</th>	
+										<th>Phone</th>
+											
+						
+					</tr>                  
+					<tr >
+					                 	<td th:text="${response}" th:value="${response}" ></td>
+					                    										
+										<td th:text="${org}" th:value="${org}"></td>
+										
+					        
+					
+					
+					</tr>
+					
+					</table>
+					</div>
+					
+					
+					
+						
+						
+						
+							<ul class="main-nav nav navbar-nav ">
+					
+					
+					
+				</ul>
+						
+					
+					<!-- Options -->
+					
+	
+</div>
+</aside>
+			
+		</div>
+	</div>
+		        <div th:include="/fragment/homefooter :: footer"></div>
+
+</body>
+</html>

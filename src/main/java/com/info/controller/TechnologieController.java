@@ -15,7 +15,7 @@ public class TechnologieController {
 	
 	@Autowired
     TechnologieRepository repository;
-	//-------------------------------- technologie----------------------------------------//
+	//-------------------------------- Test Crud ----------------------------------------//
 
 	//save technologie
 	@RequestMapping("/technologie/save")
@@ -42,3 +42,4 @@ public class TechnologieController {
 	 
 	
 }
+//------------------------------------------Technologie View -------------------------------------------------//

@@ -1,27 +1,37 @@
 package com.info.service;
 
 import java.security.Principal;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.info.ip.Ipv4;
+import com.info.ip.Ipv4Range;
 import com.info.model.DemandeEnCours;
+import com.info.model.Ipv4range;
 import com.info.model.Prefix;
 import com.info.model.Response;
 import com.info.model.Role;
 import com.info.model.Technologie;
 import com.info.model.User;
 import com.info.repo.DemandeEnCoursRepository;
+import com.info.repo.Ipv4rangeRepository;
 import com.info.repo.PrefixRepository;
 import com.info.repo.ResponseRepository;
 import com.info.repo.RoleRepository;
@@ -49,8 +59,13 @@ public class UserServiceImpl implements UserService{
 	private ResponseRepository responserepository ;
 	
 
+	@Autowired
+	private Ipv4rangeRepository ipvrepository ;
 	
-	
+	public Ipv4range findByrange(String range){
+		Ipv4range ip = ipvrepository.findByrange(range);
+		return ip;
+	}
 	//find user by email 
 	public User findUserByEmail(String email) {
 		return userRepository.findByEmail(email);
@@ -101,20 +116,55 @@ public class UserServiceImpl implements UserService{
 	
 	//add response for demand 
 	@Override
-	public void repondredemande(Response response ,@ModelAttribute("demande") DemandeEnCours demande) {
-		//get demand by id 
-       DemandeEnCours d= demanderepo.findOne(demande.getId() ); 
-      //set status of demand
-      d.setStatus("demande traitée");
-      //add response
-      response.setId_demande(d.getId());
-      response.setOrganisation(d.getOrganisation());
-      response.setResponse("votre demande est acceptée");
-      //save response
-     responserepository.save(response);
-      
-	}
+	public void repondredemande(@ModelAttribute("iprange") Ipv4range ip4range,
+			@ModelAttribute("demande") DemandeEnCours demande ,Response response,HttpServletRequest req) 
+	{
+		System.out.println("//////////////////////////test////////");
+		
+		Long v=	(Long)req.getSession().getAttribute("id");
+	       //  System.out.println(v);
+			 DemandeEnCours demand= demanderepo.findOne((long) v); 
+		    //  System.out.println(d);
 
+      Ipv4range ip=ipvrepository.findOne(ip4range.getId());
+      System.out.println(ip.getIprange().toString());
+      System.out.println(ip.toString());
+	 
+	  Ipv4Range range=ip.getIprange();
+      Ipv4 i = range.start();
+      
+      Ipv4Range e = Ipv4Range.from(i).andPrefixLength(demand.getPrefix());
+	  
+      	  
+      List<Ipv4Range> ipv4 = new ArrayList<Ipv4Range>();
+	  
+		ipv4=range.exclude(e);
+		
+
+		for (Ipv4Range ipv : ipv4) {
+		  //  System.out.println(ipv.splitToPrefixes());
+			  ip4range.setIprange(ipv);
+			  String r= ipv.splitToPrefixes().toString();
+			  System.out.println(r);
+             ip4range.setRange(r);
+		}
+		  
+	
+		 
+	      demand.setStatus("traitée");
+	      
+          response.setId_demande(demand.getId());	
+          response.setOrganisation(demand.getOrganisation());
+	     
+        response.setResponse(e.toString());
+
+  
+        responserepository.save(response)	      ;
+
+      ipvrepository.save(ip4range);
+	 
+	}
+	
 	@Override
 	public void saveTechnical(User user) {
 		
@@ -124,6 +174,14 @@ public class UserServiceImpl implements UserService{
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
 		userRepository.save(user);		
 	}
+
+	public List<Response> list() {
+
+	return null ;
+		
+	}
+	
+	
 	
 	
 

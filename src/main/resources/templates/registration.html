@@ -2,24 +2,43 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>Registration Form</title>
+	<title>Registration</title>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	  	<object th:include="/fragment/head :: head" th:remove="tag"></object>
+  	
 </head>
-<body>
-	<form th:action="@{/}" method="get">
-		<button class="btn btn-md btn-warning btn-block" type="Submit">Go To Login Page</button>
-	</form>	
+<body  class="page-container-bg-solid">
+	        <div th:include="/fragment/topmenuheader :: header"></div>
+
 	
 	<div class="container">
 		<div class="row">
-			<div class="col-md-6 col-md-offset-3">
+		
+						<aside id="aside" class="col-md-3">
+				
+		<div class="panel-group" style="margin-top:20px">
+		
+					<!-- Search -->
+					<div class="widget">
+						<div class="widget-search">
+							 <a th:href="@{/user/listofuser}"><img th:src="@{/img/home.png}"  ></a>
+						
+							<input class="search-input" type="text" placeholder="whois">
+							<button class="search-btn" type="button"><i class="fa fa-search"></i></button>
+						</div>
+					</div>
+					
+
+		</div>
+</aside>
+			<div class="col-md-9">
 				<form autocomplete="off" action="#" th:action="@{/registration}"
 					th:object="${user}" method="post" class="form-horizontal"
 					role="form">
-					<h2>Registration Form</h2>
+					<h2>Registration</h2>
 					<div class="form-group">
 						<div class="col-sm-9">
 						<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
@@ -56,7 +75,7 @@
 
 					<div class="form-group">
 						<div class="col-sm-9">
-							<button type="submit" class="btn btn-primary btn-block">Register User</button>
+							<button type="submit" class="btn btn-primary btn-block">Ajouter</button>
 						</div>
 					</div>
 					
@@ -67,6 +86,7 @@
 			</div>
 		</div>
 	</div>
+		        <div th:include="/fragment/homefooter :: footer"></div>
 
 </body>
 </html>

@@ -35,12 +35,29 @@ public class LoginController {
 	
 	//--------------------------------Login View----------------------------------------//
 
-		@RequestMapping(value={"/","/login"}, method = RequestMethod.GET)
+		@RequestMapping(value={"/login"}, method = RequestMethod.GET)
 		public ModelAndView login(){
 			ModelAndView modelAndView = new ModelAndView();
 			modelAndView.setViewName("login");
 			return modelAndView;
 		}
+		//--------------------------------Login View----------------------------------------//
+
+				@RequestMapping(value={"/","/index"}, method = RequestMethod.GET)
+				public ModelAndView index(){
+					ModelAndView modelAndView = new ModelAndView();
+					modelAndView.setViewName("index");
+					return modelAndView;
+				}
+				//--------------------------------Login View----------------------------------------//
+
+				@RequestMapping(value={"/blog"}, method = RequestMethod.GET)
+				public ModelAndView blog(){
+					ModelAndView modelAndView = new ModelAndView();
+					modelAndView.setViewName("blog-single");
+					return modelAndView;
+				}
+	
 	//-------------------------------- registration view ----------------------------------------//
 
 	@RequestMapping(value="/registration", method = RequestMethod.GET)
@@ -158,9 +175,20 @@ public class LoginController {
 		public ModelAndView home(){
 			ModelAndView modelAndView = new ModelAndView();
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			
 			User user = userService.findUserByEmail(auth.getName());
-			modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-			modelAndView.addObject("finanMessage","Content Available Only for ADMIN with fin Role");
+			int status=0;
+			if(user.getActive()== status)
+			{
+				ModelAndView model= new ModelAndView();
+				System.out.println("you have an administrative problem");
+				model.setViewName("default");
+				return model ;
+
+			} else  
+			modelAndView.addObject("userName", user.getName() + " " + user.getLastName());
+			modelAndView.addObject("adminMessage","ADMIN HOME");
+			
 			 return  modelAndView;
 				      
 			
@@ -189,8 +217,8 @@ public class LoginController {
 			ModelAndView modelAndView = new ModelAndView();
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			User user = userService.findUserByEmail(auth.getName());
-			modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-			modelAndView.addObject("techniMessage","Content Available Only for Users with technical Role");
+			modelAndView.addObject("userName", user.getName() + " " + user.getLastName() );
+			modelAndView.addObject("techniMessage","AdminHome");
 			modelAndView.setViewName("technical/home");
 			return modelAndView;
 		}

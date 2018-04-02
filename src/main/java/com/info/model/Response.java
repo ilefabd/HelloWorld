@@ -13,7 +13,7 @@ public class Response {
 
 
 	@Id
-	@GeneratedValue(strategy=GenerationType.AUTO)
+	@GeneratedValue(strategy=GenerationType.TABLE)
 	private Long id;
 	
 
@@ -50,18 +50,23 @@ public class Response {
 
 	@Override
 	public String toString() {
-		return "Response [id=" + id + ", response=" + response + "]";
+		return "Response [id=" + id + ", response=" + response + ", organisation=" + organisation + ", id_demande="
+				+ id_demande + "]";
 	}
 
 
-	public Response(Long id, String response) {
+	
+	
+	
+
+
+	public Response(String response, String organisation) {
 		super();
-		this.id = id;
 		this.response = response;
+		this.organisation = organisation;
 	}
-	
-	
-	
+
+
 	public Response() {
 		super();
 		

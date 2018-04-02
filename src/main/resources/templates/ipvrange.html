@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>les ressources IP</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	  	<object th:include="fragment/head :: head" th:remove="tag"></object>
+  	
+</head>
+<body>
+			        <div th:include="fragment/topmenuheader :: header"></div>
+		
+	
+	<div class="container">
+		<div class="row">
+			<div class="col-md-6 col-md-offset-3">
+				<form autocomplete="off" action="#" th:action="@{/ip}"
+					th:object="${iprange}" method="get" class="form-horizontal"
+					role="form">
+					<h2>les ressources IP disponibles</h2>
+					<table class="table table-striped">
+					
+				    <tr>
+				    										
+				    					<th>Id</th>	
+										<th>IP-RANGE</th>	
+										<th>RANGE</th>	
+										
+						
+					</tr>                  
+					<tr th:each="c : ${Listip}" >
+ 
+					                 	<td th:text="${c.id}" th:value="${c.id}" th:field="*{id}"></td>
+					                    										
+										<td th:text="${c.iprange}" th:value="${c.iprange}" th:field="*{iprange}"></td>
+						                <td th:text="${c.range}" th:value="${c.range}" th:field="*{range}"></td>
+					                    										
+						<td>
+							<a th:href="@{'/ip/{id}/' + ${c.id}}">Attribuer </a>
+						    </td>
+					
+					
+					</tr>
+					
+					</table>
+					
+					
+					
+					
+				</form>
+			</div>
+		</div>
+	</div>
+		        <div th:include="fragment/homefooter :: footer"></div>
+
+</body>
+</html>

@@ -56,6 +56,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.antMatchers("/technologie/**").permitAll()
 			.antMatchers("/home").permitAll()
 			.antMatchers("/registration/**").permitAll()
+			.antMatchers("/user/**").permitAll()
+
 			.antMatchers("/admin/**").hasAuthority(rolesQuery="ADMIN")
 			.and().authorizeRequests().antMatchers("/technical/**").hasAuthority(rolesQuery="technicien")
 			
@@ -68,7 +70,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.and().
 			 logout()
 			.logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-			.logoutSuccessUrl("/").and().exceptionHandling()
+			.logoutSuccessUrl("/index").and().exceptionHandling()
 			.accessDeniedPage("/default");
 			
 	}

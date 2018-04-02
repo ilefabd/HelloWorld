@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Registration Form</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	  	<object th:include="/fragment/head :: head" th:remove="tag"></object>
+  	
+</head>
+<body class="page-container-bg-solid">
+			        <div th:include="/fragment/topmenuheader :: header"></div>
+		
+	<div class="container">
+		<div class="row">
+		
+						<aside id="aside" class="col-md-3">
+				
+		<div class="panel-group" style="margin-top:20px">
+		
+					<div class="panel">
+					<div class="widget">
+						<div class="widget-search">
+						    <a th:href="@{/admin/home}"><img th:src="@{/img/home.png}"  ></a>
+						
+							<input class="search-input" type="text" placeholder="whois">
+					
+							<button class="search-btn" type="button"><i class="fa fa-search"></i></button>
+						</div>
+					
+					
+					
+						
+						
+							<ul class="main-nav nav navbar-nav ">
+					
+					
+					<li class="has-dropdown"><a>Ajouter un utilisateur </a>
+					
+						<ul class="dropdown">
+							<li><a th:href="@{/registration}" >Admin </a></li>
+							<li><a th:href="@{/registration/financier}" >Financier</a></li>
+							<li><a th:href="@{/registration/technical}" >Technicien</a></li>
+							
+							
+						</ul>
+					</li>
+				</ul>
+										</div>
+					
+					<!-- Options -->
+					
+</div>	
+</div>
+</aside>
+			
+			
+					<main id="main" class="col-md-9">
+						<div class="panel" style="margin-top:20px">
+				<form autocomplete="off" action="#" th:action="@{/user/listofuser}"
+					th:object="${user}" method="get" class="form-horizontal"
+					role="form">
+					
+					<h3>La liste des utilisateurs</h3>
+					<table class="table table-striped">
+					
+				    <tr>
+				    										
+				    					<th>Id</th>	
+										<th>Email</th>	
+										<th>Organisation</th>	
+										
+										<th>Status</th>	
+											
+						
+					</tr>                  
+					<tr th:each="d : ${userlist}" >
+					                 	<td th:text="${d.id}" ></td>
+					                    										
+										<td th:text="${d.email}"></td>
+										<td th:text="${d.organisation}"></td>
+									
+										<td th:text="${d.active}"></td>
+					       
+					
+					 <td>
+							<a th:href="@{'/user/delete/' + ${d.id}}">desactiver</a>
+							<a th:href="@{'/user/activer/' + ${d.id}}">Activer</a>
+							
+						    </td>
+					
+					</tr>
+					
+					</table>
+					
+					
+					
+					
+				</form>
+				</div>
+				</main>
+			</div>
+		</div>
+		
+	
+		        <div th:include="/fragment/homefooter :: footer"></div>
+
+</body>
+</html>

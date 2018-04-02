@@ -12,9 +12,11 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication(exclude = {SecurityAutoConfiguration.class })
-@ComponentScan(basePackages={"com.info.controller","com.info.service","com.info","com.info.controller.DemandeResourceController"})
-@EnableJpaRepositories("com.info.repo")
-@EntityScan("com.info.model")
+@ComponentScan(basePackages={"com.info.controller","com.info.service",
+		"com.info","com.info.controller.DemandeResourceController",
+		"com.info.ip.Ipv4Range"})
+@EnableJpaRepositories({"com.info.repo"})
+@EntityScan({"com.info.model","com.info.ip.Ipv4Range"})
 public class HelloWorldSpringbootApp {
 	   
 	//public static void main(String[] args) {      
