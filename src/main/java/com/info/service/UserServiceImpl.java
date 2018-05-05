@@ -7,11 +7,15 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.List;
 
+import javax.mail.MessagingException;
+import javax.mail.internet.MimeMessage;
 import javax.servlet.http.HttpServletRequest;
 
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -57,7 +61,9 @@ public class UserServiceImpl implements UserService{
 	private PrefixRepository prefixrepository ;
 	@Autowired
 	private ResponseRepository responserepository ;
+	@Autowired
 	
+    private JavaMailSender sender;
 
 	@Autowired
 	private Ipv4rangeRepository ipvrepository ;
@@ -150,16 +156,15 @@ public class UserServiceImpl implements UserService{
 		}
 		  
 	
-		 
 	      demand.setStatus("traitée");
 	      
           response.setId_demande(demand.getId());	
           response.setOrganisation(demand.getOrganisation());
 	     
         response.setResponse(e.toString());
-
   
         responserepository.save(response)	      ;
+        sendEmail2( demand ,response);
 
       ipvrepository.save(ip4range);
 	 
@@ -181,8 +186,45 @@ public class UserServiceImpl implements UserService{
 		
 	}
 	
+	   public void sendEmail(DemandeEnCours demand) throws Exception{
+	        MimeMessage message = sender.createMimeMessage();
 	
+	        MimeMessageHelper helper = new MimeMessageHelper(message);
+	         
+	        helper.setTo(demand.getEmail());
 	
+	        helper.setText("Votre demande est refusée");
 	
+	        helper.setSubject("ATI");
+	
+	         
+	
+	        sender.send(message);
+	
+	    }
+
+	
+	   public void sendEmail2(DemandeEnCours d ,Response response) {
+	        MimeMessage message = sender.createMimeMessage();
+	
+	        MimeMessageHelper helper = new MimeMessageHelper(message);
+	         
+	        try {
+				helper.setTo(d.getEmail());
+				 helper.setText("Votre demande est acceptée, le bloc affecté : "+response.getResponse());
+
+			        helper.setSubject("ATI");
+			
+			         
+			
+			} catch (MessagingException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	
+	       
+	        sender.send(message);
+	
+	    }
 
 }

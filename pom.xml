@@ -78,7 +78,18 @@
     <artifactId>commons-net</artifactId>
     <version>3.5</version>
 </dependency>
-
+<!-- https://mvnrepository.com/artifact/org.springframework.boot/spring-boot-starter-mail -->
+<dependency>
+    <groupId>org.springframework.boot</groupId>
+    <artifactId>spring-boot-starter-mail</artifactId>
+    <version>1.5.4.RELEASE</version>
+</dependency>
+ <!-- flying saucer pdf -->  
+        <dependency>
+            <groupId>org.xhtmlrenderer</groupId>
+            <artifactId>flying-saucer-pdf</artifactId>
+            <version>9.1.4</version>
+        </dependency>
     
      
     </dependencies>

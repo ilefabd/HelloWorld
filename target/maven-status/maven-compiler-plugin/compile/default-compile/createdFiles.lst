@@ -9,10 +9,12 @@ com\info\service\UserService.class
 com\info\model\Statistic.class
 com\info\model\Technologie.class
 com\info\repo\StatisticsRepository.class
+com\info\ThymeleafConfiguration.class
 com\info\repo\PrefixRepository.class
 com\info\ip\InternetResourceRange.class
 com\info\WebMvcConfig.class
 com\info\ip\Optional$1.class
+com\info\controller\Ipv4RangeController.class
 com\info\ip\AbstractRange$1.class
 com\info\repo\ResponseRepository.class
 com\info\controller\StatisticsController.class
@@ -24,6 +26,7 @@ com\info\ip\Validate.class
 com\info\ip\AbstractIp.class
 com\info\ip\SingleInternetResource.class
 com\info\model\SurveyAnswerStatistics.class
+com\info\PdfGenaratorUtil.class
 com\info\model\Ticket.class
 com\info\ip\ConservativePrefixFinder$1.class
 com\info\controller\TechnologieController.class

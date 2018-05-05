@@ -28,6 +28,7 @@ public class Ipv4range {
 	@Column(name = "ip4range")
 	private Ipv4Range iprange;
 	@Column(name = "range")
+	@NotEmpty(message = "*Please add  a new Ip range")
 	private String range;
 
 	public Ipv4range(Ipv4Range iprange) {

@@ -31,7 +31,6 @@
 					
 							<input class="form-control"   th:text="${id}"  th:name = "id" th:type = "text" th:id = "${id}" th:value ="${id}" placeholder="whois">
 				            <button type="submit"  class="btn btn-primary btn-block">Whois</button>
-												<span th:utext="${successMessage}"></span>
 							
 							</form>
 						</div>
@@ -56,31 +55,35 @@
 </div>
 </aside>
 			<div class="col-md-9">
-				<form autocomplete="off" action="#" th:action="@{/ip/ajouter}"
-					th:object="${ip}" method="post" class="form-horizontal"
-					role="form">
+				<form autocomplete="off" action="#" th:action="@{/ip/ajouter}" th:object="${ip}"
+					method="post" class="form-horizontal"
+					role="form"> 
 					<div class="form-group">
 						<div class="col-sm-9">
 											<h3>Ajouter IP-Range</h3>
-						
-						<input type="text" th:field="*{range}" placeholder="IP"
-								class="form-control" class="validation-message" /> 
-							<label th:if="${#fields.hasErrors('range')}" th:errors="*{range}"
+					<input type="text" th:field="*{range}" placeholder="IPRange"
+								class="form-control" />
+								 <label
+								th:if="${#fields.hasErrors('range')}" th:errors="*{range}"
 								class="validation-message"></label>	
+			 
+				
+							
 						</div>
+						
 					</div>
 
 					
-<div align="center" th:if="${param.error}">
-				<p style="font-size: 20; color: #FF1C19;">ip invalid please verify</p>
-			</div>
+			
 					<div class="form-group">
 						<div class="col-sm-9" >
 							<button type="submit" class="btn btn-primary btn-block">Ajouter</button>
 						</div>
+						
 					</div>
+								<span  style="font-size: 20; color: #FF1C19;" th:utext="${failMessage}"></span>
 					
-					<span th:utext="${successMessage}"></span>
+				<span   th:utext="${successMessage}"></span>
 					
 					
 				</form>

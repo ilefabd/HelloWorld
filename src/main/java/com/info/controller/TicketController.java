@@ -1,7 +1,9 @@
 package com.info.controller;
 import java.security.Principal;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -9,12 +11,17 @@ import javax.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.info.PdfGenaratorUtil;
+import com.info.model.Ipv4range;
 import com.info.model.Response;
 import com.info.model.Ticket;
 import com.info.model.User;
@@ -39,7 +46,7 @@ public String process() {
 
 
 Date d = new Date() ;
-repository.save(new Ticket("NCC#2017022418 two-step verification", "tarek@ati.tn", d));
+//repository.save(new Ticket(0, "NCC#2017022418 two-step verification", "tarek@ati.tn", null, d, null));
 return "Done";
 }
 
@@ -112,9 +119,48 @@ public ModelAndView AjouterTicket(@Valid Ticket ticket, BindingResult bindingRes
 	return modelandview ;
 }
 
+
+@RequestMapping(value="/ticket/repondre/{Ticket}" , method=RequestMethod.GET)
+@ResponseBody
+public ModelAndView Repoticket(@ModelAttribute("ticket") Ticket ticket ,@PathVariable("Ticket") Long Ticket,HttpServletRequest req,RedirectAttributes redir){
+	
+	  ModelAndView modelandview = new ModelAndView() ;
+	
+	  Ticket   tick= repository.findOne((long)Ticket);
+	
+       req.getSession().setAttribute("Ticket" ,Ticket);
+	   req.setAttribute("Ticket", Ticket);
+	  modelandview.setViewName("admin/ajoutRecla");
+
+	return modelandview ;
+}
+@RequestMapping(value="/ticket/repondre/{Ticket}" , method=RequestMethod.POST)
+@ResponseBody
+public ModelAndView RepondreTicket(@ModelAttribute("ticket") Ticket ticket,@PathVariable("Ticket") Long Ticket
+		,HttpServletRequest req){
+	  
+	  ModelAndView modelandview = new ModelAndView() ;
+	  System.out.println("JJJJJJJJJJJJJJJJJJJJJJJJ");
+
+	  Long v=	(Long)req.getSession().getAttribute("Ticket");
+
+	  Ticket   tick1= repository.findOne((long)v);
+
+	 // Ticket   tick= repository.findOne((long)Ticket);
+	  System.out.println(tick1.toString());
+
+	  tick1.setResponse(ticket.getResponse());
+	  repository.save(tick1)	;
+	  modelandview.addObject("ticket", new Ticket());
+	  List<Ticket> Listticket = (List<Ticket>) repository.findAll();
+		modelandview.addObject("Listticket",Listticket);
+	 
+	  modelandview.setViewName("admin/Listticket");
+	return modelandview ;
+}
 @RequestMapping(value="/ticket/afficher" , method=RequestMethod.GET)
 @ModelAttribute("Listticket")
-public ModelAndView resourcesnondispo(){
+public ModelAndView ListTicket(){
 	ModelAndView modelAndView = new ModelAndView();
 
 	List<Ticket> Listticket = (List<Ticket>) repository.findAll();
@@ -128,6 +174,22 @@ public ModelAndView resourcesnondispo(){
 	
 	
 }	
+@Autowired
+PdfGenaratorUtil pdfGenaratorUtil;
+@RequestMapping(value = "/pdf", method = RequestMethod.GET)
+@ResponseBody
+public ModelAndView pdf() throws Exception {
+	ModelAndView modelAndView = new ModelAndView();
+	 Map<String,String> data = new HashMap<String,String>();
+	    data.put("name","ilef");
+	    data.put("prenom","Abd");
+	    pdfGenaratorUtil.createPdf("pdf",data); 
+	    modelAndView.addObject("name" ,data);
+	    modelAndView.addObject("prenom" ,data);
+
+	modelAndView.setViewName("pdf");
+	return modelAndView;  
+}
 	
 	
 	

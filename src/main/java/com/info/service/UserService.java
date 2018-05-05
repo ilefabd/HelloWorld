@@ -27,5 +27,7 @@ public interface UserService {
 	void repondredemande(Ipv4range ip4range, DemandeEnCours demande, Response response,HttpServletRequest req);
 	List<Response> list();
 	public Ipv4range findByrange(String iprange);
+	public void sendEmail(DemandeEnCours d) throws Exception;
+	public void sendEmail2(DemandeEnCours d,Response response);
 
 }

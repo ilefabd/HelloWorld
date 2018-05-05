@@ -18,7 +18,7 @@ public class Ticket implements Serializable {
 	private static final long serialVersionUID = -3009157732242241606L;
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long Ticket;
+	private Long Ticket;
 	
 	@Column(name="subject")
 	private String Subjet ;
@@ -26,7 +26,8 @@ public class Ticket implements Serializable {
 	
 	@Column(name="email")
 	private String From ;
-	
+	@Column(name="response")
+	private String Response ;
 	@Column(name="opened")
 	private Date Opened ;
 	
@@ -44,11 +45,11 @@ public class Ticket implements Serializable {
 		this.user = user;
 	}
 
-	public long getTicket() {
+	public Long getTicket() {
 		return Ticket;
 	}
 
-	public void setTicket(long ticket) {
+	public void setTicket(Long ticket) {
 		Ticket = ticket;
 	}
 
@@ -84,18 +85,32 @@ public class Ticket implements Serializable {
 		super();
 	}
 
-	public Ticket(String subjet, String from, Date opened) {
+	public String getResponse() {
+		return Response;
+	}
+
+	public void setResponse(String response) {
+		Response = response;
+	}
+
+	
+
+	public Ticket(Long ticket, String subjet, String from, String response, Date opened, User user) {
 		super();
+		Ticket = ticket;
 		Subjet = subjet;
 		From = from;
+		Response = response;
 		Opened = opened;
+		this.user = user;
 	}
 
 	@Override
 	public String toString() {
-		return "Ticket [Ticket=" + Ticket + ", Subjet=" + Subjet + ", From=" + From + ", Opened=" + Opened + "]";
+		return "Ticket [Ticket=" + Ticket + ", Subjet=" + Subjet + ", From=" + From + ", Response=" + Response
+				+ ", Opened=" + Opened + ", user=" + user + "]";
 	}
-	
+
 	
 	
 	

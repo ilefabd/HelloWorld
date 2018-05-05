@@ -10,7 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name="statistics")
+@Table(name="statistic")
 public class Statistic {
 
 	private static final long serialVersionUID = -3009157732242241606L;

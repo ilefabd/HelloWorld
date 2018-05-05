@@ -1,6 +1,8 @@
 package com.info.controller;
 
 import java.security.Principal;
+import java.util.HashMap;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -19,6 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
+import com.info.PdfGenaratorUtil;
 import com.info.model.User;
 import com.info.repo.UserRepository;
 import com.info.service.UserService;
@@ -130,8 +133,8 @@ public class LoginController {
 		modelAndView.setViewName("registrationT");
 		return modelAndView;
 	}
-	
-	@RequestMapping(value = "/registration/technical", method = RequestMethod.POST)
+    @SuppressWarnings("unused")
+    @RequestMapping(value = "/registration/technical", method = RequestMethod.POST)
 	public ModelAndView createNewTechnical(@Valid User user, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
 		User userExists = userService.findUserByEmail(user.getEmail());
@@ -243,6 +246,7 @@ public class LoginController {
          String org = user.getLastName();
         return  name + org ;
 	}
+	
 	
 	
 	}		

@@ -78,11 +78,15 @@
 					                 	<td th:text="${d.Ticket}" th:value="${d.Ticket}" th:field="*{Ticket}"></td>
 					                    										
 										<td th:text="${d.From}"></td>
-										<td th:text="${d.subjet}"></td>
+										<td th:text="${d.Subjet}"></td>
 										<td th:text="${d.Opened}"></td>
 										
-							<td><button type="submit" class="btn btn-primary btn-block" >Répondre</button></td>
-					
+<td>
+							<a th:href="@{'/ticket/repondre/' + ${d.Ticket}}">From </a>
+							<a th:href="@{'/pdf/' + ${d.Ticket}}">Pdf </a>
+							
+						    </td>
+										
 					</tr>
 					
 					</table>

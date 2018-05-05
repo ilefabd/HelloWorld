@@ -111,8 +111,8 @@ public class Ipv4RangeController {
 			ModelAndView modelAndView = new ModelAndView();
 	    	List<Ipv4range> iplist = (List<Ipv4range>) ipv4repository.findAll();
 			modelAndView.addObject("iplist",iplist);
-	            Ipv4range user = ipv4repository.findOne((long) id);
-	        ipv4repository.delete(user);
+	            Ipv4range ip = ipv4repository.findOne((long) id);
+	        ipv4repository.delete(ip);
 			modelAndView.setViewName("ipvrange2");
 
 		return modelAndView;
@@ -128,33 +128,50 @@ public class Ipv4RangeController {
 			return modelAndView;
 		}
 		
-		@SuppressWarnings("unused")
 		@RequestMapping(value="/ip/ajouter" , method = RequestMethod.POST)
 		public ModelAndView SaveIp(@Valid Ipv4range ip, BindingResult bindingResult) {
 			ModelAndView modelAndView = new ModelAndView();
 			try {
-            Ipv4range iprange = userservice.findByrange(ip.getRange());
-            System.out.println(iprange.toString());
-            
+	
+				 Ipv4range iprange = userservice.findByrange(ip.getRange());
+		            System.out.println(iprange.toString());
             if(iprange != null) {
             	
             	bindingResult
-				.rejectValue("range", "error.ip",
+				.rejectValue("range" ,"error.ip",
 						"ip already used");
-              
-            	
-            }if (bindingResult.hasErrors()) {
+            	modelAndView.addObject("failMessage", "*ip already used");
+    			modelAndView.addObject("ip", new Ipv4range());
+
     			modelAndView.setViewName("admin/ajoutip");
-    			}}catch (Exception e) {
+                System.out.println("used adress");
 
-    			ip.setIprange(Ipv4Range.parse(ip.getRange()));
-                System.out.println("ip n'existe pas");
+            	
+            } 
+            }
+            
+            catch  (Exception e){
+            	try {ip.setIprange(Ipv4Range.parse(ip.getRange()));
 
-    			ipv4repository.save(ip);
-    			List<Ipv4range> iplist = (List<Ipv4range>) ipv4repository.findAll();
-    			modelAndView.addObject("iplist",iplist);
-    			modelAndView.setViewName("ipvrange");
-			}
+        	System.out.println("ip n'existe pas");
+        
+		ipv4repository.save(ip);
+		modelAndView.addObject("successMessage", "Ip range has been registered successfully");
+		modelAndView.addObject("ip", new Ipv4range());
+
+		modelAndView.setViewName("admin/ajoutip");
+		}  catch (Exception ei){
+
+	    			modelAndView.addObject("failMessage", "*please enter a correct ip ex :x.x.x.x/[] ");
+	    			modelAndView.addObject("ip", new Ipv4range());
+
+	    			modelAndView.setViewName("admin/ajoutip");
+				}
+
+            } 
+    			
+            
+           
             
            
             	
