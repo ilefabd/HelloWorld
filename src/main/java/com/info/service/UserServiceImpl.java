@@ -28,6 +28,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.info.ip.Ipv4;
 import com.info.ip.Ipv4Range;
 import com.info.model.DemandeEnCours;
+import com.info.model.Invoice;
 import com.info.model.Ipv4range;
 import com.info.model.Prefix;
 import com.info.model.Response;
@@ -35,6 +36,7 @@ import com.info.model.Role;
 import com.info.model.Technologie;
 import com.info.model.User;
 import com.info.repo.DemandeEnCoursRepository;
+import com.info.repo.InvoiceRepository;
 import com.info.repo.Ipv4rangeRepository;
 import com.info.repo.PrefixRepository;
 import com.info.repo.ResponseRepository;
@@ -62,12 +64,12 @@ public class UserServiceImpl implements UserService{
 	@Autowired
 	private ResponseRepository responserepository ;
 	@Autowired
-	
     private JavaMailSender sender;
 
 	@Autowired
 	private Ipv4rangeRepository ipvrepository ;
-	
+	@Autowired
+	private InvoiceRepository invoicerepository ;
 	public Ipv4range findByrange(String range){
 		Ipv4range ip = ipvrepository.findByrange(range);
 		return ip;
@@ -125,6 +127,7 @@ public class UserServiceImpl implements UserService{
 	public void repondredemande(@ModelAttribute("iprange") Ipv4range ip4range,
 			@ModelAttribute("demande") DemandeEnCours demande ,Response response,HttpServletRequest req) 
 	{
+		Invoice invoice = new Invoice() ;
 		System.out.println("//////////////////////////test////////");
 		
 		Long v=	(Long)req.getSession().getAttribute("id");
@@ -162,10 +165,12 @@ public class UserServiceImpl implements UserService{
           response.setOrganisation(demand.getOrganisation());
 	     
         response.setResponse(e.toString());
-  
+       
         responserepository.save(response)	      ;
+        saveInvoice(invoice, demand);
         sendEmail2( demand ,response);
-
+        //////////////////////////////////////////////////////////////////
+       
       ipvrepository.save(ip4range);
 	 
 	}
@@ -178,6 +183,23 @@ public class UserServiceImpl implements UserService{
         Role userRole = roleRepository.findByRole("technicien");
         user.setRoles(new HashSet<Role>(Arrays.asList(userRole)));
 		userRepository.save(user);		
+	}
+	
+	@Override
+	public void saveInvoice(Invoice invoice,DemandeEnCours demand) {
+		Date d = new Date();
+		invoice.setStatus("unpaid");
+		invoice.setIssue_date(d);
+		invoice.setTotal_amount(800);
+		String org=demand.getOrganisation();
+		String email = demand.getEmail();
+        User user =  userRepository.findByEmail(email)  ;
+        System.out.println(user.toString());
+        invoice.setUser(user);
+        invoice.setOrganisation(org);;
+		invoicerepository.save(invoice);
+
+		
 	}
 
 	public List<Response> list() {

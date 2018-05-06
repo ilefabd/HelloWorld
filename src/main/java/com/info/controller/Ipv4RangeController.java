@@ -1,6 +1,8 @@
 package com.info.controller;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.info.PdfGenaratorUtil;
 import com.info.ip.Ipv4;
 import com.info.ip.Ipv4Range;
 import com.info.ip.PrefixFinder.Strategy;
@@ -215,7 +218,8 @@ public class Ipv4RangeController {
 		
 		@Autowired
 		ResponseRepository responserepo;
-		
+		@Autowired
+		PdfGenaratorUtil pdfGenaratorUtil;
 		@SuppressWarnings("unused")
 		@RequestMapping(value = "/whois" , method=RequestMethod.GET)
 		
@@ -231,11 +235,14 @@ public class Ipv4RangeController {
 			       
 			       if (ip!=null)
 			       		{
-							 Response res = responserepo.findbyadress(id)    ;
+							  Response res = responserepo.findbyadress(id)    ;
 						       System.out.println(res.getOrganisation());
 							   
 						       System.out.println("ip valide");
-						       
+						       Map<String,String> data = new HashMap<String,String>();
+							    data.put("response",res.getResponse());
+							    data.put("org",res.getOrganisation());
+							    pdfGenaratorUtil.createPdf("pdf",data); 
 						       modelandview.addObject("res", res);
 						       modelandview.addObject("org", res.getOrganisation());
 						       modelandview.addObject("response", res.getResponse());

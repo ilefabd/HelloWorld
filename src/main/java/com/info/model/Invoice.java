@@ -15,12 +15,11 @@ import javax.persistence.Table;
 
 @Entity
 @Table(name = "invoice")
-public class Invoice implements Serializable {
+public class Invoice  {
 
-	private static final long serialVersionUID = -3009157732242241606L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private long invoiceNumber;
+	@GeneratedValue(strategy = GenerationType.TABLE)
+	private Long invoiceNumber;
 	
 	@Column(name = "status")
     private  String status ;
@@ -30,7 +29,9 @@ public class Invoice implements Serializable {
 	
 	@Column(name="issue_date")
 	private Date issue_date ;
-
+	
+	@Column(name="Organisation")
+	private String Organisation ;
 	@ManyToOne(fetch=FetchType.LAZY)
 	@JoinColumn(name="user_Invoice")
 	  private User user;
@@ -39,12 +40,19 @@ public class Invoice implements Serializable {
 	
 	
 	
-	public long getInvoice_number() {
-		return invoiceNumber;
+	
+
+	
+	public String getOrganisation() {
+		return Organisation;
 	}
 
-	public void setInvoice_number(long invoice_number) {
-		this.invoiceNumber = invoice_number;
+	public void setOrganisation(String organisation) {
+		Organisation = organisation;
+	}
+
+	public void setInvoiceNumber(Long invoiceNumber) {
+		this.invoiceNumber = invoiceNumber;
 	}
 
 	public String getStatus() {
@@ -71,7 +79,7 @@ public class Invoice implements Serializable {
 		this.issue_date = issue_date;
 	}
 
-	public long getInvoiceNumber() {
+	public Long getInvoiceNumber() {
 		return invoiceNumber;
 	}
 
@@ -87,19 +95,42 @@ public class Invoice implements Serializable {
 		this.user = user;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
+
 
 	public Invoice() {
 		super();
 	}
 
-	public Invoice( String status, double total_amount, Date issue_date) {
+	
+
+	
+	public Invoice(Long invoiceNumber, String status, double total_amount, Date issue_date, String organisation,
+			User user) {
 		super();
+		this.invoiceNumber = invoiceNumber;
 		this.status = status;
 		this.total_amount = total_amount;
 		this.issue_date = issue_date;
+		Organisation = organisation;
+		this.user = user;
+	}
+
+	
+
+	public Invoice(Long invoiceNumber, String organisation, Date issue_date ,String status, double total_amount) {
+		super();
+		this.invoiceNumber = invoiceNumber;
+
+		this.Organisation = organisation;
+		this.issue_date = issue_date;
+		this.status = status;
+		this.total_amount = total_amount;
+		
+	}
+	public Invoice(String status, double total_amount) {
+		super();
+		this.status = status;
+		this.total_amount = total_amount;
 	}
 
 	@Override

@@ -20,7 +20,6 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.info.PdfGenaratorUtil;
 import com.info.model.Ipv4range;
 import com.info.model.Response;
 import com.info.model.Ticket;
@@ -174,22 +173,7 @@ public ModelAndView ListTicket(){
 	
 	
 }	
-@Autowired
-PdfGenaratorUtil pdfGenaratorUtil;
-@RequestMapping(value = "/pdf", method = RequestMethod.GET)
-@ResponseBody
-public ModelAndView pdf() throws Exception {
-	ModelAndView modelAndView = new ModelAndView();
-	 Map<String,String> data = new HashMap<String,String>();
-	    data.put("name","ilef");
-	    data.put("prenom","Abd");
-	    pdfGenaratorUtil.createPdf("pdf",data); 
-	    modelAndView.addObject("name" ,data);
-	    modelAndView.addObject("prenom" ,data);
 
-	modelAndView.setViewName("pdf");
-	return modelAndView;  
-}
 	
 	
 	

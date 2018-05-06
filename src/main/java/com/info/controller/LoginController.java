@@ -247,7 +247,22 @@ public class LoginController {
         return  name + org ;
 	}
 	
-	
+	@Autowired
+	PdfGenaratorUtil pdfGenaratorUtil;
+	@RequestMapping(value = "/pdf", method = RequestMethod.GET)
+	@ResponseBody
+	public ModelAndView pdf() throws Exception {
+		ModelAndView modelAndView = new ModelAndView();
+		 Map<String,String> data = new HashMap<String,String>();
+		    data.put("name","ilef");
+		    data.put("prenom","Abd");
+		    pdfGenaratorUtil.createPdf("pdf",data); 
+		    modelAndView.addObject("name" ,data);
+		    modelAndView.addObject("prenom" ,data);
+
+		modelAndView.setViewName("pdf");
+		return modelAndView;  
+	}
 	
 	}		
         		

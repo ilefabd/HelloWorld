@@ -19,6 +19,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.info.model.DemandeEnCours;
+import com.info.model.Invoice;
 import com.info.model.Ipv4range;
 import com.info.model.Prefix;
 import com.info.model.Response;
@@ -137,10 +138,13 @@ public class DemandeResourceController {
 
 	      Ipv4range d1= ipvrepository.findOne(ip4range.getId());
 	      //System.out.println(d1);
-   		
-	      try{userService.repondredemande(ip4range,demande,response,req);
+
+	      try{
+	    	  userService.repondredemande(ip4range,demande,response,req);
 	      }catch(Exception e)
-	      {System.out.println("is not a legal IPv4 address prefix");
+	      {
+	    	  System.out.println("is not a legal IPv4 address prefix");
+
 			ModelAndView model= new ModelAndView();
 			model.setViewName("admin/PrefixException");
 			return model ;
@@ -168,6 +172,7 @@ public class DemandeResourceController {
 		      modelAndView.setViewName("ipvrange");
 			  return modelAndView;
 		}
+		
 		
 	
 	//ajouter une  demande  [Etape 1]
