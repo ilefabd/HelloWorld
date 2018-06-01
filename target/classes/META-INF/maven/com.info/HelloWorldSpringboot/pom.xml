@@ -87,8 +87,8 @@
  <!-- flying saucer pdf -->  
         <dependency>
             <groupId>org.xhtmlrenderer</groupId>
-            <artifactId>flying-saucer-pdf</artifactId>
-            <version>9.1.4</version>
+            <artifactId>flying-saucer-pdf-itext5</artifactId>
+            <version>9.1.13</version>
         </dependency>
     
      

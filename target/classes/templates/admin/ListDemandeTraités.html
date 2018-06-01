@@ -2,7 +2,7 @@
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>la liste des demandes </title>
+	<title>la liste des demandes traitées</title>
 	<link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
@@ -10,7 +10,7 @@
   	  	<object th:include="/fragment/head :: head" th:remove="tag"></object>
   	
 </head>
-<body>
+<body class="page-container-bg-solid" style="background-image: url('/img/grey.jpg');">
 			        <div th:include="/fragment/topmenuheader :: header"></div>
 		
 	
@@ -22,7 +22,6 @@
 					<!-- Search -->
 					<div class="widget">
 						<div class="widget-search">
-							<a th:href="@{/demande/status}"><img th:src="@{/img/home.png}"  ></a>
 						
 							<input class="search-input" type="text" placeholder="whois">
 							<button class="search-btn" type="button"><i class="fa fa-search"></i></button>
@@ -40,10 +39,24 @@
 
 				</aside>
 			<div class="col-md-9">
+		<div class="panel-group" style="margin-top:20px">
+			
+			
+								<div class="panel panel-primary">
+									<div class="panel-heading">
+									<h4>Les demandes traitées</h4>
+					
+									</div>
+
+		
+								</div>	
+						</div>
+								<div class="panel" style="margin-top:20px">
+						
 				<form autocomplete="off" action="#" th:action="@{/demande/status}"
 					th:object="${demande}" method="get" class="form-horizontal"
 					role="form">
-					<h3>la liste des demandes </h3>
+					
 					<table class="table table-striped">
 					
 				    <tr>
@@ -78,6 +91,7 @@
 				</form>
 			</div>
 		</div>
+	</div>
 	</div>
 	
 		        <div th:include="/fragment/homefooter :: footer"></div>

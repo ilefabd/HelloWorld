@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>la liste des Reclamations </title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	  	<object th:include="/fragment/head :: head" th:remove="tag"></object>
+  	
+</head>
+<body>
+			        <div th:include="/fragment/topmenuheader :: header"></div>
+		
+	
+	<div class="container">
+		<div class="row">
+						<aside id="aside" class="col-md-3">
+		<div class="panel-group" style="margin-top:20px">
+
+					<!-- Search -->
+					<div class="widget">
+						<div class="widget-search">
+						
+							<input class="search-input" type="text" placeholder="whois">
+							<button class="search-btn" type="button"><i class="fa fa-search"></i></button>
+						</div>
+					</div>
+					<!-- /Search -->
+
+					<!-- Options -->
+					
+					<div class="widget">
+					
+						<h3 class="title">Options</h3>
+						<div class="widget-category">
+					
+						<ul class="dropdown">
+			         <li class="has-dropdown"><a href="#blog">Blog</a>
+						
+							<li><a th:href="@{/blog}" >blog post</a></li>
+						</ul>
+					
+					<a th:href="@{/demandetraitée}">la liste des factures payées</a>
+					 	
+					 		
+							
+							
+							</div>
+						</div>
+					</div>
+					<!-- Options -->
+					
+	
+
+				</aside>
+			<div class="col-md-9">
+			
+				<form autocomplete="off" action="#" th:action="@{/Myresponse/afficher}"
+					th:object="${demande}" method="get" class="form-horizontal"
+					role="form">
+					<table class="table table-striped">
+					
+				    <tr>
+				    										
+				    					<th>Id</th>	
+										
+										<th>Organisation</th>	
+										
+										<th>IP </th>	
+											
+						
+					</tr>                  
+					<tr th:each="d : ${Listresponse}" >
+					                 	<td th:text="${d.id}" th:value="${d.id}" th:field="*{id}"></td>
+					                    										
+										<td th:text="${d.organisation}"></td>
+										<td th:text="${d.response}"></td>
+										
+					        
+					
+					</tr>
+					
+					</table>
+					
+					
+					
+					
+				</form>
+			</div>
+		</div>
+	</div>
+		        <div th:include="/fragment/homefooter :: footer"></div>
+
+</body>
+</html>

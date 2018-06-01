@@ -17,8 +17,8 @@
   
 </head>
 
-<body class="page-container-bg-solid">
-  	        <div th:include="/fragment/topmenuheader :: header"></div>
+<body class="page-container-bg-solid"  style="background-image: url('/img/grey.jpg');">
+  	        <div th:include="/fragment/topmenuheaderT :: header"></div>
 <div class="container">
   	 
   	 <div class="row">
@@ -40,9 +40,12 @@
 								<div class="widget-category">
 										 
 								
-							 		<a th:href="@{/demande}">Envoyer une demande IP[]</a>
-									<a th:href="@{/ticket/ajouter}">Envoyer une Reclamation</a>
-									<a th:href="@{/demande/status}">Gestion des demandes [IP]</a>
+							 		<a th:href="@{/demande}">Envoyer une demande IP[]<img th:src="@{/img/demande.ico}"   
+									th:width= 30px th:height=30px th:align="right"></a>
+									<a th:href="@{/ticket/ajouter}">Envoyer une Reclamation <img th:src="@{/img/rec.ico}"   
+									th:width= 30px th:height=30px th:align="right"></a>
+									<a th:href="@{/Myresponse/afficher}">Gestion des demandes [IP]<img th:src="@{/img/demande.ico}"   
+									th:width= 30px th:height=30px th:align="right"></a>
 									
 									<a href="#service">Actualités</a>
 									
@@ -59,8 +62,8 @@
 						<div class="panel-group" style="margin-top:20px">
 			
 			
-								<div class="panel panel-primary">
-									<div class="panel-heading">
+								<div class="panel panel-primary" >
+									<div class="panel-heading" >
 										<i class="glyphicon glyphicon-user" style="font-size:24px;color:blue;"></i><span th:utext="${userName}"></span>
 										<p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
 					
@@ -69,12 +72,368 @@
 		
 								</div>	
 						</div>
-		</main>
+							
+						<div class="panel" style="margin-top:20px" >		
+								<form autocomplete="off" action="#" th:action="@{/technical/home}"
+					th:object="${ticket}" method="get" class="form-horizontal"
+					role="form">
+
+ 					<table class="table table-striped">
+					
+				    <tr>
+				    										
+				    				
+										
+										<th>Email</th>	
+										<th>Sujet </th>
+										<th>Description </th>	
+										<th>Réponse </th>	
+											
+											
+						
+					</tr>                  
+					<tr th:each="d : ${Listticket}" >
+					                    <td th:text="${d.From}"></td>
+					                    										
+										<td th:text="${d.title}"></td>
+										
+										<td th:text="${d.Subjet}"></td>
+										<td th:text="${d.response}"></td>
+
+										
+					</tr>
+					
+					</table>
+					
+					
+					
+					
+				</form>
+						
 		
 	</div>
-	</div>
-	</div>
-		        <div th:include="/fragment/homefooter :: footer"></div>
+ </main>
+
+
+	</div>	<!-- row -->	
+		
+		<!-- About -->
 	
+	
+	<div id="about" class="section md-padding">
+
+		<!-- Container -->
+		<div class="container">
+
+			<!-- Row -->
+			<div class="row">
+
+				<!-- Section header -->
+				<div class="section-header text-center">
+					<h2 class="title">Qui Somme Nous ?</h2>
+				</div>
+				<!-- /Section header -->
+
+				<!-- about -->
+				<div class="col-md-4">
+					<div class="about">
+						<i class="fa fa-cogs"></i>
+						<h3>Fully Customizible</h3>
+						<p>Maecenas tempus tellus eget condimentum rhoncus sem quam semper libero sit amet.</p>
+						<a href="#">Read more</a>
+					</div>
+				</div>
+				<!-- /about -->
+
+				<!-- about -->
+				<div class="col-md-4">
+					<div class="about">
+						<i class="fa fa-magic"></i>
+						<h3>Awesome Features</h3>
+						<p>Maecenas tempus tellus eget condimentum rhoncus sem quam semper libero sit amet.</p>
+						<a href="#">Read more</a>
+					</div>
+				</div>
+				<!-- /about -->
+
+				<!-- about -->
+				<div class="col-md-4">
+					<div class="about">
+						<i class="fa fa-mobile"></i>
+						<h3>Fully Responsive</h3>
+						<p>Maecenas tempus tellus eget condimentum rhoncus sem quam semper libero sit amet.</p>
+						<a href="#">Read more</a>
+					</div>
+				</div>
+				<!-- /about -->
+
+			</div>
+			<!-- /Row -->
+
+		</div>
+		<!-- /Container -->
+
+	</div>
+	<!-- /About -->	
+<div id="service" class="section md-padding">
+
+		<!-- Container -->
+		<div class="container">
+
+			<!-- Row -->
+			<div class="row">
+
+				<!-- Section header -->
+				<div class="section-header text-center">
+					<h2 class="title">Actualités</h2>
+				</div>
+				<!-- /Section header -->
+
+				<!-- service -->
+				<div class="col-md-4 col-sm-6">
+					<div class="service">
+						<i class="fa fa-diamond"></i>
+						<h3>App Development</h3>
+						<p>Maecenas tempus tellus eget condimentum rhoncus sem quam semper libero.</p>
+					</div>
+				</div>
+				<!-- /service -->
+
+				<!-- service -->
+				<div class="col-md-4 col-sm-6">
+					<div class="service">
+						<i class="fa fa-rocket"></i>
+						<h3>Graphic Design</h3>
+						<p>Maecenas tempus tellus eget condimentum rhoncus sem quam semper libero.</p>
+					</div>
+				</div>
+				<!-- /service -->
+
+				<!-- service -->
+				<div class="col-md-4 col-sm-6">
+					<div class="service">
+						<i class="fa fa-cogs"></i>
+						<h3>Creative Idea</h3>
+						<p>Maecenas tempus tellus eget condimentum rhoncus sem quam semper libero.</p>
+					</div>
+				</div>
+				<!-- /service -->
+
+				<!-- service -->
+				<div class="col-md-4 col-sm-6">
+					<div class="service">
+						<i class="fa fa-diamond"></i>
+						<h3>Marketing</h3>
+						<p>Maecenas tempus tellus eget condimentum rhoncus sem quam semper libero.</p>
+					</div>
+				</div>
+				<!-- /service -->
+
+				<!-- service -->
+				<div class="col-md-4 col-sm-6">
+					<div class="service">
+						<i class="fa fa-pencil"></i>
+						<h3>Awesome Support</h3>
+						<p>Maecenas tempus tellus eget condimentum rhoncus sem quam semper libero.</p>
+					</div>
+				</div>
+				<!-- /service -->
+
+				<!-- service -->
+				<div class="col-md-4 col-sm-6">
+					<div class="service">
+						<i class="fa fa-flask"></i>
+						<h3>Brand Design</h3>
+						<p>Maecenas tempus tellus eget condimentum rhoncus sem quam semper libero.</p>
+					</div>
+				</div>
+				<!-- /service -->
+
+		</div><!-- /Row -->
+	</div><!-- /Container -->
+</div><!-- /Service -->
+	<div id="pricing" class="section md-padding">
+
+		<!-- Container -->
+		<div class="container">
+
+			<!-- Row -->
+			<div class="row">
+
+				<!-- Section header -->
+				<div class="section-header text-center">
+					<h2 class="title">Pricing Table</h2>
+				</div>
+				<!-- /Section header -->
+
+				<!-- pricing -->
+				<div class="col-sm-4">
+					<div class="pricing">
+						<div class="price-head">
+							<span class="price-title">Basic plan</span>
+							<div class="price">
+								<h3>$9<span class="duration">/ month</span></h3>
+							</div>
+						</div>
+						<ul class="price-content">
+							<li>
+								<p>1GB Disk Space</p>
+							</li>
+							<li>
+								<p>100 Email Account</p>
+							</li>
+							<li>
+								<p>24/24 Support</p>
+							</li>
+						</ul>
+						<div class="price-btn">
+							<button class="outline-btn">Purchase now</button>
+						</div>
+					</div>
+				</div>
+				<!-- /pricing -->
+
+				<!-- pricing -->
+				<div class="col-sm-4">
+					<div class="pricing">
+						<div class="price-head">
+							<span class="price-title">Silver plan</span>
+							<div class="price">
+								<h3>$19<span class="duration">/ month</span></h3>
+							</div>
+						</div>
+						<ul class="price-content">
+							<li>
+								<p>1GB Disk Space</p>
+							</li>
+							<li>
+								<p>100 Email Account</p>
+							</li>
+							<li>
+								<p>24/24 Support</p>
+							</li>
+						</ul>
+						<div class="price-btn">
+							<button class="outline-btn">Purchase now</button>
+						</div>
+					</div>
+				</div>
+				<!-- /pricing -->
+
+				<!-- pricing -->
+				<div class="col-sm-4">
+					<div class="pricing">
+						<div class="price-head">
+							<span class="price-title">Gold plan</span>
+							<div class="price">
+								<h3>$39<span class="duration">/ month</span></h3>
+							</div>
+						</div>
+						<ul class="price-content">
+							<li>
+								<p>1GB Disk Space</p>
+							</li>
+							<li>
+								<p>100 Email Account</p>
+							</li>
+							<li>
+								<p>24/24 Support</p>
+							</li>
+						</ul>
+						<div class="price-btn">
+							<button class="outline-btn">Purchase now</button>
+						</div>
+					</div>
+				</div>
+				<!-- /pricing -->
+
+			</div>
+			<!-- Row -->
+
+		</div>
+		<!-- /Container -->
+
+	</div>
+	<!-- /Pricing -->
+	
+	<div id="contact" class="section md-padding">
+
+		<!-- Container -->
+		<div class="container">
+
+			<!-- Row -->
+			<div class="row">
+
+				<!-- Section-header -->
+				<div class="section-header text-center">
+					<h2 class="title">Contact</h2>
+				</div>
+				<!-- /Section-header -->
+
+				<!-- contact -->
+				<div class="col-sm-4">
+					<div class="contact">
+						<i class="fa fa-phone"></i>
+						<h3>Tél</h3>
+						<p>(+216) 71 846 100</p>
+					</div>
+				</div>
+				<!-- /contact -->
+
+				<!-- contact -->
+				<div class="col-sm-4">
+					<div class="contact">
+						<i class="fa fa-envelope"></i>
+						<h3>Email</h3>
+						<p>com@ati.tn</p>
+					</div>
+				</div>
+				<!-- /contact -->
+
+				<!-- contact -->
+				<div class="col-sm-4">
+					<div class="contact">
+						<i class="fa fa-map-marker"></i>
+						<h3>Adresse</h3>
+						<p>13 Avenue Jugurtha, Tunis 1002, Tunisie</p>
+					</div>
+				</div>
+				<!-- /contact -->
+
+			</div>
+			<!-- /Row -->
+
+		</div>
+		<!-- /Container -->
+
+	</div>
+	<!-- /Contact -->
+	
+	
+      
+      
+      </div>
+      </div>      
+		        <div th:include="/fragment/homefooter :: footer"></div>
+	  <!-- Back to top -->
+	<div id="back-to-top"></div>
+	<!-- /Back to top -->
+	<!-- Preloader -->
+	<div id="preloader">
+		<div class="preloader">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+	<!-- /Preloader -->
+
+	<!-- jQuery Plugins -->
+	<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/owl.carousel.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/jquery.magnific-popup.js}"></script>
+	<script type="text/javascript" th:src="@{/js/main.js}"></script>
 </body>
 </html>

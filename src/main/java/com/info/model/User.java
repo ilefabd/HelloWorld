@@ -25,7 +25,7 @@ import org.springframework.data.annotation.Transient;
 public class User {
 
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	@Column(name = "user_id")
 	private Long id;
 	@Column(name = "email")
@@ -34,11 +34,11 @@ public class User {
 	private String email;
 	@Column(name = "password")
 	@Length(min = 5, message = "*Your password must have at least 5 characters")
-	@NotEmpty(message = "*Please provide your password")
+	@NotEmpty(message = "*Please enter your password")
 	@Transient
 	private String password;
 	@Column(name = "name")
-	@NotEmpty(message = "*Please provide your name")
+	@NotEmpty(message = "*Please enter the name")
 	private String name;
 	@Column(name = "last_name")
 	@NotEmpty(message = "*Please provide your last name")
@@ -46,6 +46,7 @@ public class User {
 	@Column(name = "active")
 	private int active;
 	@Column(name = "organisation")
+	@NotEmpty(message = "*Please select  an organisation")
 	private String organisation;
 	
 	@ManyToMany(cascade = CascadeType.ALL)

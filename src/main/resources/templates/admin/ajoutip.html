@@ -10,7 +10,7 @@
   	  	<object th:include="fragment/head :: head" th:remove="tag"></object>
   	
 </head>
-<body>
+<body style="background-image: url('/img/grey.jpg');" >
 	        <div th:include="/fragment/topmenuheader :: header"></div>
 
 	
@@ -24,7 +24,6 @@
 					<!-- Search -->
 					<div class="widget">
 						<div class="widget-search">
-						<a th:href="@{/admin/home}"><img th:src="@{/img/home.png}"  ></a>
 						<form autocomplete="off" action="#" th:action="@{/whois}"
 					th:object="${id}" method="get" class="form-horizontal"
 					role="form">
@@ -55,14 +54,25 @@
 </div>
 </aside>
 			<div class="col-md-9">
+			<div class="panel-group" style="margin-top:20px">
+			
+			
+								<div class="panel panel-primary">
+									<div class="panel-heading">
+									<h4>Ajouter un bloc d'adresses IP</h4>
+					
+									</div>
+
+		
+								</div>	
+						</div>
 				<form autocomplete="off" action="#" th:action="@{/ip/ajouter}" th:object="${ip}"
 					method="post" class="form-horizontal"
 					role="form"> 
 					<div class="form-group">
 						<div class="col-sm-9">
-											<h3>Ajouter IP-Range</h3>
 					<input type="text" th:field="*{range}" placeholder="IPRange"
-								class="form-control" />
+									placeholder="X.X.X.X/[ ]" class="form-control" />
 								 <label
 								th:if="${#fields.hasErrors('range')}" th:errors="*{range}"
 								class="validation-message"></label>	
@@ -77,7 +87,7 @@
 			
 					<div class="form-group">
 						<div class="col-sm-9" >
-							<button type="submit" class="btn btn-primary btn-block">Ajouter</button>
+							<button type="submit"  class="btn btn-primary btn-block">Ajouter</button>
 						</div>
 						
 					</div>
@@ -90,7 +100,6 @@
 			</div>
 		</div>
 	</div>
-		        <div th:include="/fragment/homefooter :: footer"></div>
 
 </body>
 </html>

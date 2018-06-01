@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 
 <!--[if IE 8]> <html lang="en" class="ie8 no-js"> <![endif]-->
 <!--[if IE 9]> <html lang="en" class="ie9 no-js"> <![endif]-->
@@ -7,22 +7,22 @@
 <!--<![endif]-->
 
     <head>
-        <title>HighCharts Demo | Carey Development Demos</title>
+        <title>Statistique</title>
         <meta content="This demo shows how to use HighCharts with Spring Boot" name="description" />
         <object th:include="./fragment/head :: head" th:remove="tag"></object>
         
         <link th:href="@{/assets/pages/css/profile.min.css}" rel="stylesheet" type="text/css" />
     </head>
     
-    <body class="page-container-bg-solid">
-        <div th:include="./fragment/topmenuheader :: header"></div>
+    <body class="page-container-bg-solid" >
+        <div th:include="/fragment/topmenuheader :: header"></div>
         <div class="page-container">
             <div class="page-content-wrapper">
                 <div class="page-head" style="background-color:#eff3f8;padding-top:40px">
                     <div class="container">
-                        <div class="row" style="margin-bottom:30px">
+                        <div class="row" style="margin-bottom:10px">
                             <div class="col-md-6">
-                                <h1>Resources IP statistiques</h1>
+                                <h3>Statistiques sur les ressources IP </h3>
                             </div>
                         </div>
                         <div class="row" style="margin-bottom:30px">
@@ -47,7 +47,6 @@
                         thousandsSep: ','
                     }
                 });
-
                 drawSalesByTypeChart();
 				drawSalesByRegionChart();
             });
@@ -62,11 +61,10 @@
                     		enabled: true,
                             alpha: 45,
                             beta: 0
-
                         }
                     },
                     title: {
-                        text: 'IP [] par Etat'
+                        text: 'Les ressources IP disponibles et allouees'
                     },
                     tooltip: {
                       	pointFormat: "{point.y:,.0f}"
@@ -74,8 +72,15 @@
                     plotOptions: {
                     	pie: {
                     		allowPointSelect: true,
-                    		depth: 35
-                    	}
+                    		permis: true,
+                    		depth: 45,
+                            cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true ,
+                                format: '<b>{point.y}</b>.IP',          
+                             },
+                             showInLegend: true
+                          }
                     },
                     series: [{
                         name: 'Regions',
@@ -83,13 +88,12 @@
                         data: [{
                            
                             
-                            name: 'IP [] Disponible',
-                            color:"	#008000",
-
+                            name: 'Disponibles',
+                            color:"#5CA0E5",
                             y: /*[[${midwestSales}]]*/ 0
                         },{
-                            name: 'IP [] Alloues',
-                            color:"	#FF0000",
+                            name: 'Allouees',
+                            color:"	#D35142",
                             y: /*[[${westSales}]]*/ 0
                         }]
                 	}]
@@ -103,26 +107,26 @@
                         margin: 75,
                         options3d: {
    							enabled: true,
-                        	alpha: 15,
+ 
+   							alpha: 15,
                         	beta: 15,
                         	depth: 110
                         }
                     },
                     title: {
-                        text: 'IP[] Par Organisation'
+                        text: 'les ressources allouees par organisation'
                     },
                     xAxis: {
                         categories: [[${organisation}]]
-
                     
                     },
                     yAxis: {
                         title: {
-                            text: 'IP[]'
+                            text: 'Adresses IP'
                         }
                     },
                     tooltip: {
-                      	pointFormat: "{point.y:,.0f}[IP]"
+                      	pointFormat: "{point.y:,.0f}"
                     },
                     plotOptions: {
                     	column: {

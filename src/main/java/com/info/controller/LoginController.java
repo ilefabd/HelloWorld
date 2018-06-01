@@ -2,6 +2,7 @@ package com.info.controller;
 
 import java.security.Principal;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -14,6 +15,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 
 import org.springframework.ui.ModelMap;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
@@ -22,7 +24,11 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.view.RedirectView;
 
 import com.info.PdfGenaratorUtil;
+import com.info.model.Organisation;
+import com.info.model.Ticket;
 import com.info.model.User;
+import com.info.repo.OrganisationRepository;
+import com.info.repo.TicketRepository;
 import com.info.repo.UserRepository;
 import com.info.service.UserService;
 
@@ -35,13 +41,22 @@ public class LoginController {
 	
 	@Autowired
 	UserRepository userRepository ;
-	
+	@Autowired
+	OrganisationRepository orgrepo ;
+	@Autowired
+	TicketRepository repository ;
 	//--------------------------------Login View----------------------------------------//
 
 		@RequestMapping(value={"/login"}, method = RequestMethod.GET)
 		public ModelAndView login(){
 			ModelAndView modelAndView = new ModelAndView();
-			modelAndView.setViewName("login");
+			modelAndView.setViewName("index");
+			return modelAndView;
+		}
+		@RequestMapping(value={"/facture"}, method = RequestMethod.GET)
+		public ModelAndView facture(){
+			ModelAndView modelAndView = new ModelAndView();
+			modelAndView.setViewName("facture");
 			return modelAndView;
 		}
 		//--------------------------------Login View----------------------------------------//
@@ -94,10 +109,19 @@ public class LoginController {
 	}
 	
 	@RequestMapping(value="/registration/financier", method = RequestMethod.GET)
+    @ModelAttribute("Orglist")
 	public ModelAndView registrationFinancier(){
 		ModelAndView modelAndView = new ModelAndView();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		User user1 = userService.findUserByEmail(auth.getName());
 		User user = new User();
+		List<Organisation> Orglist = (List<Organisation>) orgrepo.findAll();
+		modelAndView.addObject("Orglist", Orglist);
+
 		modelAndView.addObject("user", user);
+    	modelAndView.addObject("userName", user1.getName() + " " + user1.getLastName());
+
 		modelAndView.setViewName("registrationF");
 		return modelAndView;
 	}
@@ -106,8 +130,10 @@ public class LoginController {
 	
 	
 	@RequestMapping(value = "/registration/Financier", method = RequestMethod.POST)
+    @ModelAttribute("Orglist")
 	public ModelAndView createNewFinancier(@Valid User user, BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
+		
 		User userExists = userService.findUserByEmail(user.getEmail());
 		if (userExists != null) {
 			bindingResult
@@ -118,18 +144,28 @@ public class LoginController {
 			modelAndView.setViewName("registrationF");
 		} else {
 			userService.saveFinacier(user);
-			modelAndView.addObject("successMessage", "Financier has been registered successfully");
+			modelAndView.addObject("successMessage", "Le financier a été enregistré avec succès");
 			modelAndView.addObject("user", new User());
+			List<Organisation> Orglist = (List<Organisation>) orgrepo.findAll();
+			modelAndView.addObject("Orglist", Orglist);
 			modelAndView.setViewName("registrationF");
 			
 		}
 		return modelAndView;
 	}
 	@RequestMapping(value="/registration/technical", method = RequestMethod.GET)
+    @ModelAttribute("Orglist")
 	public ModelAndView registrationTechnical(){
 		ModelAndView modelAndView = new ModelAndView();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		User user1 = userService.findUserByEmail(auth.getName());
 		User user = new User();
+		List<Organisation> Orglist = (List<Organisation>) orgrepo.findAll();
+		modelAndView.addObject("Orglist", Orglist);
 		modelAndView.addObject("user", user);
+    	modelAndView.addObject("userName", user1.getName() + " " + user1.getLastName());
+
 		modelAndView.setViewName("registrationT");
 		return modelAndView;
 	}
@@ -147,11 +183,14 @@ public class LoginController {
 			modelAndView.setViewName("registration");
 		} else {
 			userService.saveTechnical(user);
-			modelAndView.addObject("successMessage", "Technical has been registered successfully");
+			modelAndView.addObject("successMessage", "L'opérateur a été enregistré avec succès");
 			modelAndView.addObject("user", new User());
+			List<Organisation> Orglist = (List<Organisation>) orgrepo.findAll();
+			modelAndView.addObject("Orglist", Orglist);
 			modelAndView.setViewName("registrationT");
 			
 		}
+		
 		return modelAndView;
 	}
 	
@@ -189,8 +228,25 @@ public class LoginController {
 				return model ;
 
 			} else  
+				userService.stat();
+			//pie chart 
+	        float v = (float) 21.28 ;
+	        float v1 = (float) 17.38 ;
+	        float v2 = (float) 11.63 ;
+	        float v3 = (float) 10.10 ;
+	        float v4 = (float) 4.49 ;
+	        float autre = (float)10.12  ;
+	        float ATI = (float) 25 ;
+
+	        modelAndView.addObject("Ooredoo", v);
+	        modelAndView.addObject("Orange", v1);
+	        modelAndView.addObject("Topnet", v2);
+	        modelAndView.addObject("TunisieTelecom", v3);
+	        modelAndView.addObject("Globalnet", v4);
+	        modelAndView.addObject("autre", autre);
+	        modelAndView.addObject("ATI", ATI);
 			modelAndView.addObject("userName", user.getName() + " " + user.getLastName());
-			modelAndView.addObject("adminMessage","ADMIN HOME");
+			modelAndView.addObject("adminMessage","Accueil Administrateur");
 			
 			 return  modelAndView;
 				      
@@ -204,24 +260,34 @@ public class LoginController {
 	//-------------------------------- financier home view ----------------------------------------//
 
 	@RequestMapping(value="/financier/home", method = RequestMethod.GET)
-	public ModelAndView homef(){
+	public ModelAndView homef(HttpServletRequest request){
 		ModelAndView modelAndView = new ModelAndView();
 		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 		User user = userService.findUserByEmail(auth.getName());
-		modelAndView.addObject("userName", "Welcome " + user.getName() + " " + user.getLastName() + " (" + user.getEmail() + ")");
-		modelAndView.addObject("finanMessage","Content Available Only for Users with fin Role");
+		modelAndView.addObject("userName",   user.getName() + " " + user.getLastName() );
+		modelAndView.addObject("finanMessage","Accueil Financier");
+		 Principal principal = request.getUserPrincipal();
+	      String email = principal.getName();
+
+		List<Ticket> Listticket = (List<Ticket>) repository.findbyEmail(email);
+		modelAndView.addObject("Listticket",Listticket);
 		modelAndView.setViewName("financier/home");
 		return modelAndView;
 	}
 	//-------------------------------- technical home view ----------------------------------------//
 
 		@RequestMapping(value="/technical/home", method = RequestMethod.GET)
-		public ModelAndView homeT(){
+		public ModelAndView homeT(HttpServletRequest request){
 			ModelAndView modelAndView = new ModelAndView();
 			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
 			User user = userService.findUserByEmail(auth.getName());
 			modelAndView.addObject("userName", user.getName() + " " + user.getLastName() );
-			modelAndView.addObject("techniMessage","AdminHome");
+			modelAndView.addObject("techniMessage","Accueil Opérateur");
+			Principal principal = request.getUserPrincipal();
+		    String email = principal.getName();
+
+			List<Ticket> Listticket = (List<Ticket>) repository.findbyEmail(email);
+			modelAndView.addObject("Listticket",Listticket);;
 			modelAndView.setViewName("technical/home");
 			return modelAndView;
 		}
@@ -248,7 +314,7 @@ public class LoginController {
 	}
 	
 	@Autowired
-	PdfGenaratorUtil pdfGenaratorUtil;
+	//PdfGenaratorUtil pdfGenaratorUtil;
 	@RequestMapping(value = "/pdf", method = RequestMethod.GET)
 	@ResponseBody
 	public ModelAndView pdf() throws Exception {
@@ -256,14 +322,29 @@ public class LoginController {
 		 Map<String,String> data = new HashMap<String,String>();
 		    data.put("name","ilef");
 		    data.put("prenom","Abd");
-		    pdfGenaratorUtil.createPdf("pdf",data); 
+		  //  pdfGenaratorUtil.createPdf("pdf",data); 
 		    modelAndView.addObject("name" ,data);
 		    modelAndView.addObject("prenom" ,data);
 
 		modelAndView.setViewName("pdf");
 		return modelAndView;  
 	}
-	
+	@RequestMapping(value = "/profil", method = RequestMethod.GET)
+    @ResponseBody
+    public ModelAndView profil(HttpServletRequest request) {
+		ModelAndView model = new ModelAndView();
+        Principal principal = request.getUserPrincipal();
+         String name = principal.getName();
+         User user =  userRepository.findByEmail(name)  ;
+         String org = user.getLastName();
+         model.addObject("name", user.getName());
+         model.addObject("firstname", user.getLastName());
+         model.addObject("email", user.getEmail());
+         model.addObject("org", user.getOrganisation());
+model.setViewName("/profil");
+
+        return  model ;
+	}
 	}		
         		
         		

@@ -1,4 +1,4 @@
-package com.info.service;
+ package com.info.service;
 
 import java.security.Principal;
 import java.util.ArrayList;
@@ -24,6 +24,7 @@ import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.info.ip.Ipv4;
 import com.info.ip.Ipv4Range;
@@ -33,6 +34,7 @@ import com.info.model.Ipv4range;
 import com.info.model.Prefix;
 import com.info.model.Response;
 import com.info.model.Role;
+import com.info.model.SurveyAnswerStatistics;
 import com.info.model.Technologie;
 import com.info.model.User;
 import com.info.repo.DemandeEnCoursRepository;
@@ -43,6 +45,9 @@ import com.info.repo.ResponseRepository;
 import com.info.repo.RoleRepository;
 import com.info.repo.TechnologieRepository;
 import com.info.repo.UserRepository;
+
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 
@@ -65,7 +70,8 @@ public class UserServiceImpl implements UserService{
 	private ResponseRepository responserepository ;
 	@Autowired
     private JavaMailSender sender;
-
+@Autowired
+Ipv4rangeRepository iprangerepository;
 	@Autowired
 	private Ipv4rangeRepository ipvrepository ;
 	@Autowired
@@ -165,13 +171,12 @@ public class UserServiceImpl implements UserService{
           response.setOrganisation(demand.getOrganisation());
 	     
         response.setResponse(e.toString());
-       
-        responserepository.save(response)	      ;
+       response.setSize(e.size());
+        responserepository.save(response);	
+
         saveInvoice(invoice, demand);
-        sendEmail2( demand ,response);
         //////////////////////////////////////////////////////////////////
-       
-      ipvrepository.save(ip4range);
+    ipvrepository.save(ip4range);
 	 
 	}
 	
@@ -188,9 +193,35 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void saveInvoice(Invoice invoice,DemandeEnCours demand) {
 		Date d = new Date();
-		invoice.setStatus("unpaid");
+		String prefix = demand.getPrefix();
+		System.out.println(prefix);
+		int p = Integer.parseInt(prefix);
+if (p>=24 )
+{		invoice.setTotal_amount(2500);
+}
+if (p==23 )
+{		invoice.setTotal_amount(2700);
+}
+if (p==22 )
+{		invoice.setTotal_amount(3000);
+}
+if (p==20 || p==19)
+{		invoice.setTotal_amount(5000);
+}if (p==18 || p==17)
+{		invoice.setTotal_amount(7500);
+}
+if (p==16 || p==15)
+{		invoice.setTotal_amount(9000);
+}if (p==14 || p==13)
+{		invoice.setTotal_amount(10000);
+}if (p==12 || p==11 )
+{		invoice.setTotal_amount(12000);
+}
+
+		invoice.setStatus("Non payée");
 		invoice.setIssue_date(d);
-		invoice.setTotal_amount(800);
+		invoice.setDetail(" consomation ressources IP suite à la demande du bloc / "+demand.getPrefix());
+	//	invoice.setTotal_amount(800);
 		String org=demand.getOrganisation();
 		String email = demand.getEmail();
         User user =  userRepository.findByEmail(email)  ;
@@ -233,7 +264,7 @@ public class UserServiceImpl implements UserService{
 	         
 	        try {
 				helper.setTo(d.getEmail());
-				 helper.setText("Votre demande est acceptée, le bloc affecté : "+response.getResponse());
+				 helper.setText("Le bloc41.224.0.0/18 vous a été attribué");
 
 			        helper.setSubject("ATI");
 			
@@ -248,5 +279,53 @@ public class UserServiceImpl implements UserService{
 	        sender.send(message);
 	
 	    }
+	   public void stat() {
+			ModelAndView modelAndView =new ModelAndView() ;
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			
+		
+//			   //    List<SurveyAnswerStatistics> result = responserepository.fi
+//			       Integer ipalloue =responserepository.findResponseCount();
+//			       Integer ipdisponible =iprangerepository.findiprangeCount();
+//
+//			       Long y = null;
+//			       String x = "" ;
+//			       List<Integer> inshoreSales =  new ArrayList<>() ;
+//		            List<String> organisation =  new ArrayList<>();
+//
+//			       for (int i = 0 ; i<result.size();i++)
+//			       {
+//			    	   
+//					     y = result.get(i).getCnt();
+//				         x = result.get(i).getOrganisation();
+//				         Integer count = (int) (long) y;
+//			       
+//	                     inshoreSales.add(count);
+//	                     organisation.add(x);
+//	              
+//				         
+//
+//
+//					     
+//			       }
+//			     System.out.println(ipalloue);
+//			     System.out.println(ipdisponible);
+//
+//			      
+//
+//			       // model.addObject("ATI", '50%');
+//			      //  model.addObject("midwestSales", ipdisponible);
+//			     //   model.addObject("westSales", ipalloue);
+//			       
+//			      //Column chart
+//			        modelAndView.addObject("x", organisation);
+//	  
+//			           // System.out.println(inshoreSales.toString());
+//			        modelAndView.addObject("inshoreSales", inshoreSales);
+//			        modelAndView.addObject("organisation", organisation);
+//			          //  System.out.println(organisation.toString());
 
+
+			        
+	    }
 }

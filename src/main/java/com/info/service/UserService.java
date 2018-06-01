@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestAttribute;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.info.ip.Ipv4Range;
 import com.info.model.DemandeEnCours;
@@ -31,5 +32,5 @@ public interface UserService {
 	public void sendEmail(DemandeEnCours d) throws Exception;
 	public void sendEmail2(DemandeEnCours d,Response response);
 	public void saveInvoice(Invoice invoice,DemandeEnCours demand) ;
-
+	public void stat();
 }

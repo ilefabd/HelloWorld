@@ -10,19 +10,18 @@
   	  	<object th:include="/fragment/head :: head" th:remove="tag"></object>
   	
 </head>
-<body>
+<body class="page-container-bg-solid" style="background-image: url('/img/grey.jpg');" >
 			        <div th:include="/fragment/topmenuheader :: header"></div>
 		
 	
 	<div class="container">
 		<div class="row">
 						<aside id="aside" class="col-md-3">
-		<div class="panel-group" style="margin-top:20px">
+		<div class="panel" style="margin-top:20px">
 
 					<!-- Search -->
 					<div class="widget">
 						<div class="widget-search">
-							<a th:href="@{/admin/home}"><img th:src="@{/img/home.png}"  ></a>
 						
 							<input class="search-input" type="text" placeholder="whois">
 							<button class="search-btn" type="button"><i class="fa fa-search"></i></button>
@@ -37,15 +36,10 @@
 						<h3 class="title">Options</h3>
 						<div class="widget-category">
 						
-						<ul class="dropdown">
-			         <li class="has-dropdown"><a href="#blog">Blog</a>
 						
-							<li><a th:href="@{/blog}" >blog post</a></li>
-						</ul>
 					
-					 		<a th:href="@{/resourcesnondispo}"> les ressources affectées</a>
 					 		
-							<a th:href="@{/demandetraitée}">la liste des demandes traitées</a>
+							<a th:href="@{/demandetraitée}">La liste des demandes traitées</a>
 							
 							
 							</div>
@@ -57,10 +51,25 @@
 
 				</aside>
 			<div class="col-md-9">
+			<div class="panel-group" style="margin-top:20px">
+			
+			
+								<div class="panel panel-primary">
+									<div class="panel-heading">
+									<h4>La liste des demandes de ressources IP</h4>
+					
+									</div>
+
+		
+								</div>	
+						</div>
+					
+									<div class="panel" style="margin-top:20px">
+						
 				<form autocomplete="off" action="#" th:action="@{/demande/status}"
 					th:object="${demande}" method="get" class="form-horizontal"
 					role="form">
-					<h3>la liste des demandes </h3>
+					<h3> </h3>
 					<table class="table table-striped">
 					
 				    <tr>
@@ -71,7 +80,8 @@
 										<th>Prefix</th>	
 										<th>Technologie</th>
 										<th>Status</th>	
-											
+										<th></th>
+										<th></th>	
 						
 					</tr>                  
 					<tr th:each="d : ${Listdemande}" >
@@ -83,8 +93,9 @@
 										<td th:text="${d.technologie}"></td>
 										<td th:text="${d.status}"></td>
 					        <td>
-							<a  th:href="@{'/iprangelist/' + ${d.id}}">Répondre</a>
-							<a  th:href="@{'/simpleemail/'+ ${d.id}}">Rejeter</a>
+							<button type="submit"  > <a  th:href="@{'/iprangelist/' + ${d.id}}">Répondre<a></button></td>
+							
+						<td>	<button type="submit" > <a  th:href="@{'/simpleemail/'+ ${d.id}}">Rejecter <a></button>
 							
 						    </td>
 					
@@ -101,7 +112,6 @@
 		</div>
 	</div>
 	
-		        <div th:include="/fragment/homefooter :: footer"></div>
 
 </body>
 </html>

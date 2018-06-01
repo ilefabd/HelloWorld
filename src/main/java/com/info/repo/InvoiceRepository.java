@@ -6,6 +6,7 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import com.info.model.DemandeEnCours;
 import com.info.model.Invoice;
 import com.info.model.Response;
 
@@ -15,4 +16,9 @@ public interface InvoiceRepository extends CrudRepository<Invoice, Long> {
 		       "FROM " +
 		       "    Invoice v " + "WHERE "+ "Organisation= :Organisation ")
  public List<Invoice>  findbyadress(@Param("Organisation") String Organisation) ;
+	
+	
+	
+	 List<Invoice> findByStatus(String status);
+
 }

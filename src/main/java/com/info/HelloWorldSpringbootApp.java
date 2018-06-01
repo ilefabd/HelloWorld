@@ -16,7 +16,7 @@ import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 		"com.info","com.info.controller.DemandeResourceController",
 		"com.info.ip.Ipv4Range"})
 @EnableJpaRepositories({"com.info.repo"})
-@EntityScan({"com.info.model","com.info.ip.Ipv4Range"})
+@EntityScan({"com.info.model","com.info.ip.Ipv4Range","com.info.model.*"})
 public class HelloWorldSpringbootApp {
 	   
 	//public static void main(String[] args) {      

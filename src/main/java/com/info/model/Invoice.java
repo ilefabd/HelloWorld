@@ -29,7 +29,8 @@ public class Invoice  {
 	
 	@Column(name="issue_date")
 	private Date issue_date ;
-	
+	@Column(name="detail")
+	private String detail;
 	@Column(name="Organisation")
 	private String Organisation ;
 	@ManyToOne(fetch=FetchType.LAZY)
@@ -43,6 +44,14 @@ public class Invoice  {
 	
 
 	
+	public String getDetail() {
+		return detail;
+	}
+
+	public void setDetail(String detail) {
+		this.detail = detail;
+	}
+
 	public String getOrganisation() {
 		return Organisation;
 	}
@@ -104,18 +113,18 @@ public class Invoice  {
 	
 
 	
-	public Invoice(Long invoiceNumber, String status, double total_amount, Date issue_date, String organisation,
-			User user) {
+	
+
+	public Invoice(String status, double total_amount, Date issue_date, String detail,
+			String organisation, User user) {
 		super();
-		this.invoiceNumber = invoiceNumber;
 		this.status = status;
 		this.total_amount = total_amount;
 		this.issue_date = issue_date;
+		this.detail = detail;
 		Organisation = organisation;
 		this.user = user;
 	}
-
-	
 
 	public Invoice(Long invoiceNumber, String organisation, Date issue_date ,String status, double total_amount) {
 		super();

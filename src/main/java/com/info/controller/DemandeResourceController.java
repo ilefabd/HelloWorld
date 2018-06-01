@@ -7,12 +7,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RequestParam; 
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.servlet.ModelAndView;
@@ -24,6 +26,7 @@ import com.info.model.Ipv4range;
 import com.info.model.Prefix;
 import com.info.model.Response;
 import com.info.model.Technologie;
+import com.info.model.User;
 import com.info.repo.DemandeEnCoursRepository;
 import com.info.repo.Ipv4rangeRepository;
 import com.info.repo.PrefixRepository;
@@ -91,7 +94,9 @@ public class DemandeResourceController {
 			ModelAndView modelAndView = new ModelAndView();
 	    	List<Prefix> prefixLst = (List<Prefix>) repository.findAll();
 	    	List<Technologie> technooLst = (List<Technologie>) techrepository.findAll();
-
+	    	Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			User user = userService.findUserByEmail(auth.getName());
+			modelAndView.addObject("userName", user.getName() + " " + user.getLastName());
 			DemandeEnCours demande = new DemandeEnCours();
 			modelAndView.addObject("demande", demande);
 			modelAndView.addObject("prefixLst",prefixLst);
@@ -105,9 +110,17 @@ public class DemandeResourceController {
 		@RequestMapping(value = "/demande", method = RequestMethod.POST)
 		public ModelAndView createNewdemande(@Valid DemandeEnCours demande, BindingResult bindingResult , HttpServletRequest request) {
 			ModelAndView modelAndView = new ModelAndView();
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			User user = userService.findUserByEmail(auth.getName());
+			modelAndView.addObject("userName", user.getName() + " " + user.getLastName());
+			List<Prefix> prefixLst = (List<Prefix>) repository.findAll();
+	    	List<Technologie> technooLst = (List<Technologie>) techrepository.findAll();
 		    userService.savedemande(demande ,request);
-			modelAndView.addObject("successMessage", "Votre demande est ajoutée avec succés");
-			modelAndView.addObject("demande", new DemandeEnCours());
+			modelAndView.addObject("successMessage", "Votre demande a été enregistré  avec succés");
+			modelAndView.addObject("demande", demande);
+			modelAndView.addObject("prefixLst",prefixLst);
+			modelAndView.addObject("technooLst",technooLst);
+
 			modelAndView.setViewName("technical/demande");
 			
 		
@@ -141,6 +154,7 @@ public class DemandeResourceController {
 
 	      try{
 	    	  userService.repondredemande(ip4range,demande,response,req);
+	    	  userService.sendEmail2(d, response);
 	      }catch(Exception e)
 	      {
 	    	  System.out.println("is not a legal IPv4 address prefix");
@@ -206,7 +220,9 @@ public class DemandeResourceController {
 		    @ModelAttribute("Listdemande")
 			public ModelAndView findbyStatus(String Status){
 				ModelAndView modelAndView = new ModelAndView();
-
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				User user = userService.findUserByEmail(auth.getName());
+				modelAndView.addObject("userName", user.getName() + " " + user.getLastName());
 				String S = "EN COURS";
 				List<DemandeEnCours> Listdemande = (List<DemandeEnCours>) demanderepo.findByStatus(S);
 				modelAndView.addObject("Listdemande",Listdemande);
@@ -225,7 +241,9 @@ public class DemandeResourceController {
 		    @ModelAttribute("Listdemande")
 			public ModelAndView lesdemandesTraitées(String Status){
 				ModelAndView modelAndView = new ModelAndView();
-
+				Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+				User user = userService.findUserByEmail(auth.getName());
+				modelAndView.addObject("userName", user.getName() + " " + user.getLastName());
 				String S = "traitée";
 				List<DemandeEnCours> Listdemande = (List<DemandeEnCours>) demanderepo.findByStatus(S);
 				modelAndView.addObject("Listdemande",Listdemande);

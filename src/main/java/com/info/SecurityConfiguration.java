@@ -64,7 +64,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 			.and().authorizeRequests().antMatchers("/financier/**").hasAuthority(rolesQuery="Financier")
 			.and()
 			.formLogin().successHandler(successHandler)
-			.loginPage("/login").failureUrl("/login?error=true")
+			.loginPage("/login").failureUrl("/index?error=true")
 			.usernameParameter("email")
 			.passwordParameter("password")
 			.and().

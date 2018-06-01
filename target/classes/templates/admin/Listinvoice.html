@@ -10,20 +10,18 @@
   	  	<object th:include="/fragment/head :: head" th:remove="tag"></object>
   	
 </head>
-<body>
+<body style="background-image: url('/img/grey.jpg');" class="page-container-bg-solid" >
 			        <div th:include="/fragment/topmenuheader :: header"></div>
 		
 	
 	<div class="container">
 		<div class="row">
 						<aside id="aside" class="col-md-3">
-		<div class="panel-group" style="margin-top:20px">
+		<div class="panel" style="margin-top:20px">
 
 					<!-- Search -->
 					<div class="widget">
 						<div class="widget-search">
-												<a th:href="@{/admin/home}"><img th:src="@{/img/home.png}"  ></a>
-						
 							<input class="search-input" type="text" placeholder="whois">
 							<button class="search-btn" type="button"><i class="fa fa-search"></i></button>
 						</div>
@@ -44,9 +42,9 @@
 						</ul>
 					
 					 	
-					 		<a th:href="@{/demandetraitée}">Ajouter une facture </a>
+					 		<a th:href="@{/invoice/ajouter}">Ajouter une facture </a>
 					 		
-							<a th:href="@{/demandetraitée}">la liste des factures payées</a>
+							<a th:href="@{/invoice/afficher}">la liste des factures payées</a>
 							
 							
 							</div>
@@ -58,10 +56,23 @@
 
 				</aside>
 			<div class="col-md-9">
-				<form autocomplete="off" action="#" th:action="@{/invoice/afficher}"
+			<div class="panel-group" style="margin-top:20px">
+			
+			
+								<div class="panel panel-primary">
+									<div class="panel-heading">
+									<h4>La liste des factures </h4>
+					
+									</div>
+
+		
+								</div>	
+						</div>
+									<div class="panel" style="margin-top:20px">
+						
+				<form autocomplete="off" action="#" th:action="@{/invoice/unpaid}"
 					th:object="${invoice}" method="get" class="form-horizontal"
 					role="form">
-					<h3>la liste des Factures </h3>
 					<table class="table table-striped">
 					
 				    <tr>
@@ -70,18 +81,22 @@
 										
 										<th>Organisation</th>	
 										
-										<th>Date </th>	
+										<th>Date </th>
+																					<th>Détails </th>
+											
 										<th>Montant Total </th>	
 										<th>Status </th>	
 											
 						
 					</tr>                  
 					<tr th:each="d : ${Listinvoice}" >
-					                 	<td th:text="${d.invoiceNumber}" th:value="${d.invoiceNumber}" th:field="*{invoiceNumber}"></td>
+					                 	<td th:text="${d.invoiceNumber} " th:value="${d.invoiceNumber}" th:field="*{invoiceNumber}"></td>
 					                    <td th:text="${d.Organisation}"></td>
 					                    										
 										<td th:text="${d.issue_date}"></td>
-										<td th:text="${d.total_amount}"></td>
+										<td th:text="${d.detail}"></td>
+										
+										<td th:text="${d.total_amount}+' ' +' '+'DT'"></td>
 										<td th:text="${d.status}"></td>
 										
 <td>
@@ -100,7 +115,6 @@
 			</div>
 		</div>
 	</div>
-		        <div th:include="/fragment/homefooter :: footer"></div>
 
 </body>
 </html>

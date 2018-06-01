@@ -13,20 +13,35 @@
   	  	<object th:include="/fragment/head :: head" th:remove="tag"></object>
   	
 </head>
-<body>
+<body  style="background-image: url('/img/grey.jpg');">
 	
-	  	        <div th:include="/fragment/topmenuheader :: header"></div>
+	  	        <div th:include="/fragment/topmenuheaderT :: header"></div>
 	
 	<div class="container">
 		<div class="row">
 			<div class="col-md-6 col-md-offset-3">
+			
+			
+							<div class="panel-group" style="margin-top:40px">
+			
+			
+								<div class="panel panel-primary">
+									<div class="panel-heading">
+									<h4>Ajouter une nouvelle demande</h4>
+					
+					
+									</div>
+
+		
+								</div>	
+						</div>
 				<form autocomplete="off" action="#" th:action="@{/demande}"
 					th:object="${demande}" method="post" class="form-horizontal"
 					role="form">
 					
 					
 					
-						<h2>Demande Ressources</h2>
+						
 					
 					<div class="form-group">
 					

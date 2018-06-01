@@ -14,15 +14,15 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 @Entity
 @Table(name="ticket")
-public class Ticket implements Serializable {
-	private static final long serialVersionUID = -3009157732242241606L;
+public class Ticket  {
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
-	private Long Ticket;
+	@GeneratedValue(strategy = GenerationType.TABLE)
+	private Long id;
 	
 	@Column(name="subject")
 	private String Subjet ;
-	
+	@Column(name="title")
+	private String title ;
 	
 	@Column(name="email")
 	private String From ;
@@ -45,14 +45,7 @@ public class Ticket implements Serializable {
 		this.user = user;
 	}
 
-	public Long getTicket() {
-		return Ticket;
-	}
-
-	public void setTicket(Long ticket) {
-		Ticket = ticket;
-	}
-
+	
 	public String getSubjet() {
 		return Subjet;
 	}
@@ -77,10 +70,7 @@ public class Ticket implements Serializable {
 		Opened = opened;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
+	
 	public Ticket() {
 		super();
 	}
@@ -95,24 +85,50 @@ public class Ticket implements Serializable {
 
 	
 
-	public Ticket(Long ticket, String subjet, String from, String response, Date opened, User user) {
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
+	public String getTitle() {
+		return title;
+	}
+
+	public void setTitle(String title) {
+		this.title = title;
+	}
+
+	
+	public Ticket(String subjet, String title, String from, String response, Date opened, User user) {
 		super();
-		Ticket = ticket;
 		Subjet = subjet;
+		this.title = title;
 		From = from;
 		Response = response;
 		Opened = opened;
 		this.user = user;
 	}
 
+
+	public Ticket(String subjet, String title, String from, String response, Date opened) {
+		super();
+		Subjet = subjet;
+		this.title = title;
+		From = from;
+		Response = response;
+		Opened = opened;
+	}
+	
 	@Override
 	public String toString() {
-		return "Ticket [Ticket=" + Ticket + ", Subjet=" + Subjet + ", From=" + From + ", Response=" + Response
-				+ ", Opened=" + Opened + ", user=" + user + "]";
+		return "Ticket [id=" + id + ", Subjet=" + Subjet + ", From=" + From + ", Response=" + Response + ", Opened="
+				+ Opened + ", user=" + user + "]";
 	}
 
-	
-	
+
 	
 	
 	

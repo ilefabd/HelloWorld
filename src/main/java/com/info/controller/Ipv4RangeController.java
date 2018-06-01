@@ -8,6 +8,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.util.matcher.IpAddressMatcher;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -24,13 +26,14 @@ import com.info.PdfGenaratorUtil;
 import com.info.ip.Ipv4;
 import com.info.ip.Ipv4Range;
 import com.info.ip.PrefixFinder.Strategy;
-import com.info.model.Customer;
 import com.info.model.DemandeEnCours;
 import com.info.model.Ipv4range;
+import com.info.model.Organisation;
 import com.info.model.Prefix;
 import com.info.model.Response;
 import com.info.model.User;
 import com.info.repo.Ipv4rangeRepository;
+import com.info.repo.OrganisationRepository;
 import com.info.repo.ResponseRepository;
 import com.info.service.UserService; 
 
@@ -47,8 +50,10 @@ public class Ipv4RangeController {
 	@Autowired
 	UserService userservice ;
 	
-	
-	
+	@Autowired
+	OrganisationRepository orgrepo;
+	@Autowired
+	UserService userService ;
 	
 	
 // save an  ip4range 
@@ -125,6 +130,9 @@ public class Ipv4RangeController {
 		@RequestMapping(value="/ip/ajouter", method = RequestMethod.GET)
 		public ModelAndView registration(){
 			ModelAndView modelAndView = new ModelAndView();
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			User user = userService.findUserByEmail(auth.getName());
+			modelAndView.addObject("userName", user.getName() + " " + user.getLastName());
 			Ipv4range ip =new Ipv4range() ;
 			modelAndView.addObject("ip", ip);
 			modelAndView.setViewName("admin/ajoutip");
@@ -132,12 +140,16 @@ public class Ipv4RangeController {
 		}
 		
 		@RequestMapping(value="/ip/ajouter" , method = RequestMethod.POST)
-		public ModelAndView SaveIp(@Valid Ipv4range ip, BindingResult bindingResult) {
+		public ModelAndView CreateIp(@Valid Ipv4range ip, BindingResult bindingResult) {
 			ModelAndView modelAndView = new ModelAndView();
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			User user = userService.findUserByEmail(auth.getName());
+			modelAndView.addObject("userName", user.getName() + " " + user.getLastName());
+
 			try {
 	
 				 Ipv4range iprange = userservice.findByrange(ip.getRange());
-		            System.out.println(iprange.toString());
+		         System.out.println(iprange.toString());
             if(iprange != null) {
             	
             	bindingResult
@@ -159,13 +171,13 @@ public class Ipv4RangeController {
         	System.out.println("ip n'existe pas");
         
 		ipv4repository.save(ip);
-		modelAndView.addObject("successMessage", "Ip range has been registered successfully");
+		modelAndView.addObject("successMessage", "Bloc ip a été enregistré avec succès");
 		modelAndView.addObject("ip", new Ipv4range());
 
 		modelAndView.setViewName("admin/ajoutip");
 		}  catch (Exception ei){
 
-	    			modelAndView.addObject("failMessage", "*please enter a correct ip ex :x.x.x.x/[] ");
+	    			modelAndView.addObject("failMessage", "*Veuillez saisir un bloc ip correct Exemple: 192.0.0.0/[16]\" ");
 	    			modelAndView.addObject("ip", new Ipv4range());
 
 	    			modelAndView.setViewName("admin/ajoutip");
@@ -192,7 +204,13 @@ public class Ipv4RangeController {
 	    @ResponseBody
 	    public ModelAndView Iplist() {
 		   ModelAndView modelAndView = new ModelAndView();
+		   Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			
+			User user = userService.findUserByEmail(auth.getName());
+			modelAndView.addObject("userName", user.getName() + " " + user.getLastName());
+
 		   List<Ipv4range> Listip = (List<Ipv4range>) ipvrepository.findAll();
+
 			modelAndView.addObject("Listip", Listip);
 		     
 		    modelAndView.setViewName("ipvrange2");
@@ -204,6 +222,9 @@ public class Ipv4RangeController {
 	    @ModelAttribute("Listdemande")
 		public ModelAndView resourcesnondispo(){
 			ModelAndView modelAndView = new ModelAndView();
+			Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+			User user = userService.findUserByEmail(auth.getName());
+			modelAndView.addObject("userName", user.getName() + " " + user.getLastName());
 
 			List<Response> Listresponse = (List<Response>) responserepository.findAll();
 			modelAndView.addObject("Listresponse",Listresponse);
@@ -236,13 +257,19 @@ public class Ipv4RangeController {
 			       if (ip!=null)
 			       		{
 							  Response res = responserepo.findbyadress(id)    ;
-						       System.out.println(res.getOrganisation());
+							  String o = res.getOrganisation();
+						      Organisation orga = orgrepo.findByOrgname(o);
+						      modelandview.addObject("email",orga.getEmail());
+						      modelandview.addObject("phone", orga.getPhone());
+						       System.out.println(orga.toString());
 							   
 						       System.out.println("ip valide");
+						       
+						       
 						       Map<String,String> data = new HashMap<String,String>();
 							    data.put("response",res.getResponse());
 							    data.put("org",res.getOrganisation());
-							    pdfGenaratorUtil.createPdf("pdf",data); 
+							//    pdfGenaratorUtil.createPdf("pdf",data); 
 						       modelandview.addObject("res", res);
 						       modelandview.addObject("org", res.getOrganisation());
 						       modelandview.addObject("response", res.getResponse());

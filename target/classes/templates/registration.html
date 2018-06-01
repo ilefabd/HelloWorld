@@ -7,11 +7,11 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
   	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
   	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-  	  	<object th:include="/fragment/head :: head" th:remove="tag"></object>
+  	  	<object th:include="fragment/head :: head" th:remove="tag"></object>
   	
 </head>
-<body  class="page-container-bg-solid">
-	        <div th:include="/fragment/topmenuheader :: header"></div>
+<body  style="background-image: url('/img/grey.jpg');" class="page-container-bg-solid">
+	  	        <div th:include="/fragment/topmenuheader :: header"></div>
 
 	
 	<div class="container">
@@ -24,21 +24,19 @@
 					<!-- Search -->
 					<div class="widget">
 						<div class="widget-search">
-							 <a th:href="@{/user/listofuser}"><img th:src="@{/img/home.png}"  ></a>
 						
-							<input class="search-input" type="text" placeholder="whois">
-							<button class="search-btn" type="button"><i class="fa fa-search"></i></button>
+							
 						</div>
 					</div>
 					
 
 		</div>
 </aside>
-			<div class="col-md-9">
+			<div class="col-md-9" style="margin-top:20px">
 				<form autocomplete="off" action="#" th:action="@{/registration}"
 					th:object="${user}" method="post" class="form-horizontal"
 					role="form">
-					<h2>Registration</h2>
+					
 					<div class="form-group">
 						<div class="col-sm-9">
 						<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"

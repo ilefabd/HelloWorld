@@ -27,7 +27,8 @@ public class Response {
 	@Column(name="id_demande")
 	private Long id_demande ;
 	
-	
+	@Column(name="size")
+	private Long size ;
 	public Long getId() {
 		return id;
 	}
@@ -57,13 +58,34 @@ public class Response {
 
 	
 	
-	
+	public Response(String organisation,Long size) {
+		super();
+		this.organisation = organisation;
+		this.size = size;
+	}
+
+
+	public Response(String response) {
+		super();
+		this.response = response;
+	}
+
 
 
 	public Response(String response, String organisation) {
 		super();
 		this.response = response;
 		this.organisation = organisation;
+	}
+
+
+	public Response(Long id, String response, String organisation, Long id_demande, Long size) {
+		super();
+		this.id = id;
+		this.response = response;
+		this.organisation = organisation;
+		this.id_demande = id_demande;
+		this.size = size;
 	}
 
 
@@ -90,6 +112,16 @@ public class Response {
 
 	public void setId_demande(Long id_demande) {
 		this.id_demande = id_demande;
+	}
+
+
+	public Long getSize() {
+		return size;
+	}
+
+
+	public void setSize(Long size) {
+		this.size = size;
 	}
 
 

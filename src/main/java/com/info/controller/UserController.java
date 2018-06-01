@@ -7,6 +7,8 @@ import javax.mail.internet.MimeMessage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -38,6 +40,10 @@ public class UserController {
     @ModelAttribute("userlist")
 	public ModelAndView listofuser(){
 		ModelAndView modelAndView = new ModelAndView();
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+		
+		User user = userservice.findUserByEmail(auth.getName());
+    	modelAndView.addObject("userName", user.getName() + " " + user.getLastName());
     	List<User> userlist = (List<User>) userrepo.findAll();
 
 		modelAndView.addObject("userlist",userlist);

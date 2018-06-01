@@ -1,13 +1,112 @@
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-</head>
-<body>
-    <p th:text="'Organisation, ' + ${Organisation} + '!'" />
-        <p th:text="'Status, ' + ${Status} + '!'" />
-                <p th:text="'Date, ' + ${Date} + '!'" />
-                        <p th:text="'Montant, ' + ${MontantTotal} + '!'" />
+
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>Example 2</title>
+    <link rel="stylesheet" href="/css2/style.css" media="all" />
+  </head>
+  <body border-top="blue">
+    <header class="clearfix">
+      <div id="logo">
+        <img src="/img/ati-logo.png">
+      </div>
+   <div id="company" align="right">
+        <h4 class="name"><p th:text="'Numéro facture : ' + ${idinv} " />
+</h4>
+        <div><p th:text="'Numéro client : ' + ${iduser} " /></div>
+        <div><a href="mailto:company@example.com"></a></div>
+      </div>
+     
+    </header>
+    <body> 
+    <main>
+      <div  align="left">
+        <div id="client">
+          <h4 class="to"> <p th:text="'DESTINATAIRE : ' + ${Organisation} " />
+          </h4>
         
-    
-</body>
+               
+          <div class="address"> <p th:text="'ADRESSE :'+${adress}" /></div>
+          <div class="email"><p th:text ="'EMAIL:'"><a href="mailto:john@example.com">	<p th:text="${email}" /></a></div>
+        </div>
+        <div id="invoice" align="center">
+          <h1>INVOICE</h1>
+          <div class="date"><p th:text="'Date de la facture :'+${Date}" /></div>
+        </div>
+      </div>
+      <br>
+            <br>
+            <br>
+            
+	<table class="table table-striped" border="0" align="center">
+		<tr border="1">
+			<th class="no">#</th>
+			<th class="desc"><h4>DESCRIPTION</h4></th>
+						<th class="desc"><h4>MONTANT<h4></th>
+			
+			<th class="desc"></th>
+
+
+
+		</tr>
+
+		<tr>
+			<td class="no">01</td>
+			<td class="desc" align="left" ><p th:text="${detail} " /></td>
+			<td><p th:text="${MontantTotal} " /></td>
+			<td>DT</td>
+
+
+		</tr>
+
+
+		<tr align="left">
+			<td colspan="6"></td>
+			<td colspan="2"><h4>MONTANT HT</h4></td>
+			<td><p th:text="${MontantTotal} " /></td>
+						<td>DT</td>
+			
+		</tr>
+		<tr>
+			<td colspan="6"></td>
+			<td colspan="2"><h4>TAXE 19%</h4></td>
+			<td><p th:text="${taxe} " /></td>
+									<td>DT</td>
+			
+		</tr>
+		<tr>
+			<td colspan="6"></td>
+			<td colspan="2"><h4>TOTAL</h4></td>
+			<td><h4><p th:text="${glob} " /></h4></td>
+									<td>DT</td>
+			
+		</tr>
+	</table>
+	</main>
+	</body>
+       <br>
+            <br>
+            <br>
+      
+      <div id="thanks"></div>
+       <br>
+            <br>
+            <br>
+      <div id="notices">
+        <div></div>
+        <div class="notice"></div>
+      </div>
+    <footer>
+   <div id="company" align="right">
+        <h4 class="name">ATI - Agence Tunisienne d'Internet
+</h4>
+        <div>422 Rue de Medine, Belvedere
+Tunis 1002
+Tunisie</div>
+        <div>Tél: 71 147 000</div>
+        <div><a href="mailto:company@example.com">email: com@ati.tn</a></div>
+      </div>
+          </footer>
+  </body>
 </html>

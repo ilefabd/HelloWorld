@@ -10,20 +10,21 @@
   	  	<object th:include="/fragment/head :: head" th:remove="tag"></object>
   	
 </head>
-<body class="page-container-bg-solid">
+
+		
+<body class="page-container-bg-solid"  style="background-image: url('/img/grey.jpg');">
 			        <div th:include="/fragment/topmenuheader :: header"></div>
 		
-	<div class="container">
+	<div class="container" > 
 		<div class="row">
 		
-						<aside id="aside" class="col-md-3">
+						<aside id="aside" class="col-md-3"  >
 				
-		<div class="panel-group" style="margin-top:20px">
+		<div class="panel-group" style="margin-top:20px" >
 		
 					<div class="panel">
 					<div class="widget">
 						<div class="widget-search">
-						    <a th:href="@{/admin/home}"><img th:src="@{/img/home.png}"  ></a>
 						
 							<input class="search-input" type="text" placeholder="whois">
 					
@@ -40,9 +41,10 @@
 					<li class="has-dropdown"><a>Ajouter un utilisateur </a>
 					
 						<ul class="dropdown">
-							<li><a th:href="@{/registration}" >Admin </a></li>
+						<li><a th:href="@{/registration/technical}" >Opérateur</a></li>
+						
 							<li><a th:href="@{/registration/financier}" >Financier</a></li>
-							<li><a th:href="@{/registration/technical}" >Technicien</a></li>
+							<li><a th:href="@{/registration}" >Admin </a></li>
 							
 							
 						</ul>
@@ -57,23 +59,37 @@
 </aside>
 			
 			
-					<main id="main" class="col-md-9">
-						<div class="panel" style="margin-top:20px">
+					<th:main id="main" class="col-md-9"  >
+					<div class="panel-group" style="margin-top:20px">
+			
+			
+								<div class="panel panel-primary">
+									<div class="panel-heading">
+									<h4>La liste des utilisateurs</h4>
+					
+									</div>
+
+		
+								</div>	
+						</div>
+						<div class="panel" style="margin-top:20px" >
 				<form autocomplete="off" action="#" th:action="@{/user/listofuser}"
 					th:object="${user}" method="get" class="form-horizontal"
 					role="form">
 					
-					<h3>La liste des utilisateurs</h3>
-					<table class="table table-striped">
 					
-				    <tr>
+					<table class="table table-striped" >
+					
+				    <tr th:background-color="red">
 				    										
 				    					<th>Id</th>	
 										<th>Email</th>	
 										<th>Organisation</th>	
 										
 										<th>Status</th>	
-											
+										<th></th>	
+									<th></th>	
+									<th></th>	
 						
 					</tr>                  
 					<tr th:each="d : ${userlist}" >
@@ -86,11 +102,17 @@
 					       
 					
 					 <td>
-							<a th:href="@{'/user/delete/' + ${d.id}}">desactiver</a>
-							<a th:href="@{'/user/activer/' + ${d.id}}">Activer</a>
+							<a th:href="@{'/user/delete/' + ${d.id}}"><img th:src="@{/img/user_delete.png}"   th:width= 30px
+    th:height=30px></a>
+    </td>
+						<td>	<a th:href="@{'/user/activer/' + ${d.id}}"><img th:src="@{/img/user_add.png}"   th:width= 30px
+    th:height=30px></a>
 							
 						    </td>
-					
+						    <td>
+					<a><img th:src="@{/img/user_update.png}"   
+									th:width= 30px th:height=30px align="right"></a></td>
+						  
 					</tr>
 					
 					</table>
@@ -100,12 +122,11 @@
 					
 				</form>
 				</div>
-				</main>
+				</th:main>
 			</div>
 		</div>
 		
-	
-		        <div th:include="/fragment/homefooter :: footer"></div>
+
 
 </body>
 </html>

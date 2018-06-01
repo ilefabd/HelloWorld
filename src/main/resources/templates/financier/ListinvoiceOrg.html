@@ -10,8 +10,8 @@
   	  	<object th:include="/fragment/head :: head" th:remove="tag"></object>
   	
 </head>
-<body>
-			        <div th:include="/fragment/topmenuheader :: header"></div>
+<body  class="page-container-bg-solid" style="background-image: url('/img/grey.jpg');">
+			        <div th:include="/fragment/topmenuheaderF :: header"></div>
 		
 	
 	<div class="container">
@@ -19,75 +19,56 @@
 						<aside id="aside" class="col-md-3">
 		<div class="panel-group" style="margin-top:20px">
 
-					<!-- Search -->
-					<div class="widget">
-						<div class="widget-search">
-												<a th:href="@{/admin/home}"><img th:src="@{/img/home.png}"  ></a>
-						
-							<input class="search-input" type="text" placeholder="whois">
-							<button class="search-btn" type="button"><i class="fa fa-search"></i></button>
-						</div>
-					</div>
-					<!-- /Search -->
-
-					<!-- Options -->
-					
-					<div class="widget">
-					
-						<h3 class="title">Options</h3>
-						<div class="widget-category">
-					
-						<ul class="dropdown">
-			         <li class="has-dropdown"><a href="#blog">Blog</a>
-						
-							<li><a th:href="@{/blog}" >blog post</a></li>
-						</ul>
-					
-					<a th:href="@{/demandetraitée}">la liste des factures payées</a>
-					 	
-					 		
-							
-							
-							</div>
-						</div>
-					</div>
-					<!-- Options -->
+	
 					
 	
-
+</div>
 				</aside>
-			<div class="col-md-9">
+					<th:main id="main" class="col-md-9"  >
+				<div class="panel-group" style="margin-top:20px">
+			
+			
+								<div class="panel panel-primary">
+									<div class="panel-heading">
+									<h4>La liste des factures</h4>
+					
+									</div>		</div></div>
+
+
+														<div class="panel" style="margin-top:20px" >		
+								
 				<form autocomplete="off" action="#" th:action="@{/Myinvoice/afficher}"
 					th:object="${invoice}" method="get" class="form-horizontal"
 					role="form">
-					<h3>la liste des Factures </h3>
+					
 					<table class="table table-striped">
 					
 				    <tr>
 				    										
 				    					<th>Fature-Id</th>	
 										
-										<th>Organisation</th>	
 										
 										<th>Date </th>	
-										<th>Montant Total </th>	
+										
+										
 										<th>Status </th>	
 											
 						
 					</tr>                  
 					<tr th:each="d : ${Listinvoice}" >
 					                 	<td th:text="${d.invoiceNumber}" th:value="${d.invoiceNumber}" th:field="*{invoiceNumber}"></td>
-					                    <td th:text="${d.organisation}"></td>
 					                    										
 										<td th:text="${d.issue_date}"></td>
-										<td th:text="${d.total_amount}"></td>
+										
 										<td th:text="${d.status}"></td>
 										
 <td>
-					<a  th:href="@{'/invoice/' + ${d.invoiceNumber}}">Payer</a>
+<a  th:href="@{'/pdf/' + ${d.invoiceNumber}}"><img th:src="@{/img/pdf.png}"   
+									th:width= 30px th:height=30px th:align="right"></a>
 							
-					<a  th:href="@{'/pdf/' + ${d.invoiceNumber}}">Payer</a>
+					<button><a  th:href="@{'/invoice/' + ${d.invoiceNumber}}">Payer</a></button>
 							
+					
 						    </td>
 										
 					</tr>
@@ -98,9 +79,11 @@
 					
 					
 				</form>
+				</div>
+				</th:main>
 			</div>
 		</div>
-	</div>
+
 		        <div th:include="/fragment/homefooter :: footer"></div>
 
 </body>

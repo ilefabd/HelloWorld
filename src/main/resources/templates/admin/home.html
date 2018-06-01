@@ -1,25 +1,18 @@
 <!DOCTYPE html>
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml"
-	xmlns:th="http://www.thymeleaf.org" >
-
+	xmlns:th="http://www.thymeleaf.org">
 <head>
-	<title>ADMIN HOME</title>
-
-<link rel="stylesheet" type="text/css" th:href="@{/css/home.css}" />
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
-<script	src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
-<script	src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
- <link th:href="@{/assets/pages/css/profile.min.css}" rel="stylesheet" type="text/css" />
- <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
-<object th:include="/fragment/head :: head" th:remove="tag"></object>
+	<title>la page Admin</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	  	<object th:include="/fragment/head :: head" th:remove="tag"></object>
   	
-  
 </head>
-
-<body class="page-container-bg-solid" >
-	        
- 			        <div th:include="/fragment/topmenuheader :: header"></div>
+<body class="page-container-bg-solid"  style="background-image: url('/img/grey.jpg');">
+			        <div th:include="/fragment/topmenuheader :: header"></div>
+		
  
 <div class="container">
 		       
@@ -30,33 +23,50 @@
 					<div class="panel panel-primary">
 		
 							<div class="widget">
-								<div class="widget-search">
+								<div class="widget-search" >
 								<form autocomplete="off" action="#" th:action="@{/whois}"
 					th:object="${id}" method="get" class="form-horizontal"
 					role="form">
 					
-							<input class="search-input"   th:text="${id}"  th:name = "id" th:type = "text" th:id = "${id}" th:value ="${id}" placeholder="whois">
-				            <button class="search-btn" type="submit" ><i class="fa fa-search"></i></button>
+						<div><input class="search-input"   th:text="${id}"  th:name = "id" th:type = "text" th:id = "${id}"
+							 th:value ="${id}" placeholder="whois"  ></div>
+					<div> <button class="search-btn" type="submit"   >
+							 <img th:src="@{/img/whois.png}"   th:width= 35px
+    th:height=35px align="right"></button></div>
+
+				            
 												<span th:utext="${successMessage}"></span>
 							
 							</form>
 								</div>
-							</div>
-							
-							<div class="widget">
+						
+															</div>
+														<div class="widget">
 							
 								<h3 class="title">Options</h3>
 								<div class="widget-category">
 										 
 								
-							 		<a th:href="@{/user/listofuser}">Gestion des utilisateurs</a>
-									<a th:href="@{/iprangelist}">Gestion des ressources IP</a>
-									<a th:href="@{/demande/status}">Gestion des demandes [IP]</a>
-									 <a th:href="@{/invoice/afficher}">Gestion des Factures</a>
-									
-								    <a th:href="@{/ticket/afficher}">Gestion des Reclamations</a>
+							 	<a th:href="@{/user/listofuser}">Gestion des utilisateurs
+							 		 
+<img th:src="@{/img/user.ico}"   
+									th:width= 30px th:height=30px th:align="right"></a>
+									<a th:href="@{/iprangelist}">Gestion des ressources IP
+<img th:src="@{/img/ip.ico}"   
+									th:width= 30px th:height=30px th:align="right"></a>
+									<a  th:href="@{/demande/status}">Gestion des demandes IP
+							<img th:src="@{/img/demande.ico}"   
+									th:width= 30px th:height=30px th:align="right"></a>
+									 <a th:href="@{/invoice/unpaid}">Gestion des factures
+									 <img th:src="@{/img/invoice.ico}"   
+									th:width= 30px th:height=30px th:align="right"></a>
+								    <a th:href="@{/ticket/afficher}">Gestion des réclamations
+								   <img th:src="@{/img/rec.ico}"   
+									th:width= 30px th:height=30px th:align="right"> </a>
 								
-									<a th:href="@{/statistics}">Statistisques</a>
+									<a th:href="@{/statistics}">Statistisques
+									<img th:src="@{/img/stat.ico}"   
+									th:width= 40px th:height=30px align="right"></a>
 									<a href="#service">Actualités</a>
 									
 							  	</div>
@@ -69,13 +79,12 @@
 					
 					
 					<main id="main" class="col-md-9">
-						<div class="panel-group" style="margin-top:20px">
+						<div class="col-md-9" style="margin-top:20px;width:100%; height:40px ">
 			
 			
-								<div class="panel panel-primary">
-									<div class="panel-heading">
+								<div class="panel panel-primary" >
+									<div class="panel-heading" >
 										<i class="glyphicon glyphicon-user" style="font-size:24px;color:blue;"></i><span th:utext="${userName}"></span>
-										<p class="admin-message-text text-center" th:utext="${adminMessage}"></p>
 					
 									</div>
 
@@ -85,17 +94,18 @@
 <div class="page-container-bg-solid">
         <div class="page-container">
             <div class="page-content-wrapper">
-                <div class="page-head" style="background-color:#eff3f8;padding-top:20px" style="width:80%; height:400px;">
+                <div class="page-head" style="background-color:#eff3f8;padding-top:10px" style="width:100%; height:400px;">
                     <div class="container">
-                        <div class="row" style="margin-bottom:30px">
+                        <div class="row" style="margin-bottom:20px">
                             
                         </div>
-                        <div class="row" style="margin-bottom:30px">
-                            <div class="col-md-9" style="margin-top:20px">
-                                <div id="salesByType" style="width:90%; height:400px;"></div>
+                        <div class="row" style="margin-bottom:20px">
+                            
+                            <div class="col-md-9" style="margin-top:10px">
+                                <div id="salesByRegion" style="width:97%;"></div>
                             </div>
                             <div class="col-md-9" style="margin-top:20px">
-                                <div id="salesByRegion" style="width:90%; height:400px;"></div>
+                                <div id="" style="width:90%; height:400px;"></div>
                             </div>
                         </div>                        
                     </div>
@@ -108,11 +118,65 @@
 
 	</div>	<!-- row -->	
 		
-		
+		<!-- About -->
+	
+	
+	<div id="about" class="section md-padding">
 
-	
-	
-	<div id="service" class="section md-padding">
+		<!-- Container -->
+		<div class="container">
+
+			<!-- Row -->
+			<div class="row">
+
+				<!-- Section header -->
+				<div class="section-header text-center">
+					<h2 class="title">Qui Somme Nous ?</h2>
+				</div>
+				<!-- /Section header -->
+
+				<!-- about -->
+				<div class="col-md-4">
+					<div class="about">
+						<i class="fa fa-cogs"></i>
+						<h3>Fully Customizible</h3>
+						<p>Maecenas tempus tellus eget condimentum rhoncus sem quam semper libero sit amet.</p>
+						<a href="#">Read more</a>
+					</div>
+				</div>
+				<!-- /about -->
+
+				<!-- about -->
+				<div class="col-md-4">
+					<div class="about">
+						<i class="fa fa-magic"></i>
+						<h3>Awesome Features</h3>
+						<p>Maecenas tempus tellus eget condimentum rhoncus sem quam semper libero sit amet.</p>
+						<a href="#">Read more</a>
+					</div>
+				</div>
+				<!-- /about -->
+
+				<!-- about -->
+				<div class="col-md-4">
+					<div class="about">
+						<i class="fa fa-mobile"></i>
+						<h3>Fully Responsive</h3>
+						<p>Maecenas tempus tellus eget condimentum rhoncus sem quam semper libero sit amet.</p>
+						<a href="#">Read more</a>
+					</div>
+				</div>
+				<!-- /about -->
+
+			</div>
+			<!-- /Row -->
+
+		</div>
+		<!-- /Container -->
+
+	</div>
+	<!-- /About -->	
+<div id="service" class="section md-padding">
 
 		<!-- Container -->
 		<div class="container">
@@ -189,6 +253,163 @@
 		</div><!-- /Row -->
 	</div><!-- /Container -->
 </div><!-- /Service -->
+	<div id="pricing" class="section md-padding">
+
+		<!-- Container -->
+		<div class="container">
+
+			<!-- Row -->
+			<div class="row">
+
+				<!-- Section header -->
+				<div class="section-header text-center">
+					<h2 class="title">Pricing Table</h2>
+				</div>
+				<!-- /Section header -->
+
+				<!-- pricing -->
+				<div class="col-sm-4">
+					<div class="pricing">
+						<div class="price-head">
+							<span class="price-title">Basic plan</span>
+							<div class="price">
+								<h3>$9<span class="duration">/ month</span></h3>
+							</div>
+						</div>
+						<ul class="price-content">
+							<li>
+								<p>1GB Disk Space</p>
+							</li>
+							<li>
+								<p>100 Email Account</p>
+							</li>
+							<li>
+								<p>24/24 Support</p>
+							</li>
+						</ul>
+						<div class="price-btn">
+							<button class="outline-btn">Purchase now</button>
+						</div>
+					</div>
+				</div>
+				<!-- /pricing -->
+
+				<!-- pricing -->
+				<div class="col-sm-4">
+					<div class="pricing">
+						<div class="price-head">
+							<span class="price-title">Silver plan</span>
+							<div class="price">
+								<h3>$19<span class="duration">/ month</span></h3>
+							</div>
+						</div>
+						<ul class="price-content">
+							<li>
+								<p>1GB Disk Space</p>
+							</li>
+							<li>
+								<p>100 Email Account</p>
+							</li>
+							<li>
+								<p>24/24 Support</p>
+							</li>
+						</ul>
+						<div class="price-btn">
+							<button class="outline-btn">Purchase now</button>
+						</div>
+					</div>
+				</div>
+				<!-- /pricing -->
+
+				<!-- pricing -->
+				<div class="col-sm-4">
+					<div class="pricing">
+						<div class="price-head">
+							<span class="price-title">Gold plan</span>
+							<div class="price">
+								<h3>$39<span class="duration">/ month</span></h3>
+							</div>
+						</div>
+						<ul class="price-content">
+							<li>
+								<p>1GB Disk Space</p>
+							</li>
+							<li>
+								<p>100 Email Account</p>
+							</li>
+							<li>
+								<p>24/24 Support</p>
+							</li>
+						</ul>
+						<div class="price-btn">
+							<button class="outline-btn">Purchase now</button>
+						</div>
+					</div>
+				</div>
+				<!-- /pricing -->
+
+			</div>
+			<!-- Row -->
+
+		</div>
+		<!-- /Container -->
+
+	</div>
+	<!-- /Pricing -->
+	
+	<div id="contact" class="section md-padding">
+
+		<!-- Container -->
+		<div class="container">
+
+			<!-- Row -->
+			<div class="row">
+
+				<!-- Section-header -->
+				<div class="section-header text-center">
+					<h2 class="title">Contact</h2>
+				</div>
+				<!-- /Section-header -->
+
+				<!-- contact -->
+				<div class="col-sm-4">
+					<div class="contact">
+						<i class="fa fa-phone"></i>
+						<h3>Tél</h3>
+						<p>(+216) 71 846 100</p>
+					</div>
+				</div>
+				<!-- /contact -->
+
+				<!-- contact -->
+				<div class="col-sm-4">
+					<div class="contact">
+						<i class="fa fa-envelope"></i>
+						<h3>Email</h3>
+						<p>com@ati.tn</p>
+					</div>
+				</div>
+				<!-- /contact -->
+
+				<!-- contact -->
+				<div class="col-sm-4">
+					<div class="contact">
+						<i class="fa fa-map-marker"></i>
+						<h3>Adresse</h3>
+						<p>13 Avenue Jugurtha, Tunis 1002, Tunisie</p>
+					</div>
+				</div>
+				<!-- /contact -->
+
+			</div>
+			<!-- /Row -->
+
+		</div>
+		<!-- /Container -->
+
+	</div>
+	<!-- /Contact -->
+	
 	
       
       
@@ -206,7 +427,6 @@
                     }
                 });
 
-                drawSalesByTypeChart();
 				drawSalesByRegionChart();
             });
             
@@ -224,18 +444,25 @@
                         }
                     },
                     title: {
-                        text: 'IP [] par Etat'
+                        text: ' Ressources IP allouées par Organisation'
                     },
                     tooltip: {
-                      	pointFormat: "{point.y:,.0f}"
+                      	pointFormat: "{point.y:,.0f}%"
                     },
                     plotOptions: {
                     	pie: {
                     		allowPointSelect: true,
+                    		permis: true,
                     		depth: 45,
                             cursor: 'pointer',
+                            dataLabels: {
+                                enabled: true ,
+                                format: '<b>{point.y}</b>: {point.Regions} %',          
+                             },
+                             showInLegend: true
+                          }
 
-                    	}
+                    	
                     },
                     series: [{
                         name: 'Regions',
@@ -244,20 +471,44 @@
                         data: [{
                            
                             
-                            name: 'IP [] Disponibles',
-                            color:"	#27AE60",
+                            name: 'Ooredoo',
+                            color:"	#D35142",
 
-                            y: /*[[${midwestSales}]]*/ 0
+                            y: /*[[${Ooredoo}]]*/ 0
                         },{
-                            name: 'IP [] Alloues',
-                            color:"	#2980B9",
-                            y: /*[[${westSales}]]*/ 0
-                        },{
-                            name: 'IP [] Statiques',
-                                color:"	#CD6155",
+                          
+						
+                           
+                            
+                            name: 'Orange',
+                            color:"	#D38442",
 
-                            y: /*[[${IPStatique}]]*/ 0
-                        }]
+                            y: /*[[${Orange}]]*/ 0
+                        },{
+                           
+                            
+                            name: 'Topnet',
+                            color:"	#344CC5",
+
+                            y: /*[[${Topnet}]]*/ 0
+                        },{
+						 
+                            
+                            name: 'TunisieTelecom',
+                            color:"	#5CA0E5",
+
+                            y: /*[[${TunisieTelecom}]]*/ 0
+                        },{
+                            name: 'Globalnet',
+                            color:"	#7C7777",
+                            y: /*[[${Globalnet}]]*/ 0
+                        },{
+                            name: 'Autre',
+                            color:"	#85A564",
+                            y: /*[[${autre}]]*/ 0
+                        }
+                        
+                        ]
                 	}]
                 });
             }
@@ -275,7 +526,7 @@
                         }
                     },
                     title: {
-                        text: 'IP[] Par Organisation'
+                        text: 'Ressources IP allouées par organisation'
                     },
                     xAxis: {
                         categories: [[${organisation}]]
@@ -314,8 +565,27 @@
 		
 <div th:include="/fragments/homefooter :: footer"></div>
 
+<div th:include="/fragment/homefooter :: footer"></div>
 
-  
+  <!-- Back to top -->
+	<div id="back-to-top"></div>
+	<!-- /Back to top -->
+	<!-- Preloader -->
+	<div id="preloader">
+		<div class="preloader">
+			<span></span>
+			<span></span>
+			<span></span>
+			<span></span>
+		</div>
+	</div>
+	<!-- /Preloader -->
 
+	<!-- jQuery Plugins -->
+	<script type="text/javascript" th:src="@{/js/jquery.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/bootstrap.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/owl.carousel.min.js}"></script>
+	<script type="text/javascript" th:src="@{/js/jquery.magnific-popup.js}"></script>
+	<script type="text/javascript" th:src="@{/js/main.js}"></script>
 </body>
 </html>

@@ -10,7 +10,7 @@
   	  	  	<object th:include="/fragment/head :: head" th:remove="tag"></object>
   	
 </head>
-<body class="page-container-bg-solid">
+<body class="page-container-bg-solid" style="background-image: url('/img/grey.jpg');">
 	        <div th:include="/fragment/topmenuheader :: header"></div>
  	<div class="container">
 		<div class="row">
@@ -23,10 +23,8 @@
 					<!-- Search -->
 					<div class="widget">
 						<div class="widget-search">
-							<a th:href="@{/user/listofuser}"><img th:src="@{/img/home.png}"  ></a>
 						
-							<input class="search-input" type="text" placeholder="whois">
-							<button class="search-btn" type="button"><i class="fa fa-search"></i></button>
+							
 						</div>
 					</div>
 					
@@ -44,11 +42,11 @@
 	
 	
 
-			<div class="col-md-9">
+			<div class="col-md-9" style="margin-top:20px">
 				<form autocomplete="off" action="#" th:action="@{/registration/technical}"
 					th:object="${user}" method="post" class="form-horizontal"
 					role="form">
-					<h2>Registration</h2>
+					
 					<div class="form-group">
 						<div class="col-sm-9">
 						<label th:if="${#fields.hasErrors('name')}" th:errors="*{name}"
@@ -82,14 +80,16 @@
 								class="validation-message"></label>
 						</div>
 					</div>
-						<div class="form-group">
-						<div class="col-sm-9">
-							<input type="text" th:field="*{organisation}" placeholder="Organisation"
-								class="form-control" /> <label
-								th:if="${#fields.hasErrors('organisation')}" th:errors="*{organisation}"
-								class="validation-message"></label>
-						</div>
-					</div>
+						
+<div class="form-group">
+
+					 <div  class="col-sm-9">
+					  <select th:field="*{organisation}"> 
+					  <option value="">Organisation...</option> 
+					  
+					  <option th:each="c : ${Orglist}" th:value="${c.org_name}" th:text="${c.org_name}">
+					  </option> </select> </div> 
+					  </div>
 
 					<div class="form-group">
 						<div class="col-sm-9">

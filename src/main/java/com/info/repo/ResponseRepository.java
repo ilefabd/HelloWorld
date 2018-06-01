@@ -8,17 +8,18 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.query.Param;
 
+import com.info.model.Invoice;
 import com.info.model.Response;
 import com.info.model.SurveyAnswerStatistics;
 
 public interface ResponseRepository extends CrudRepository<Response, Serializable>  {
 
 	@Query("SELECT " +
-		       "    new com.info.model.SurveyAnswerStatistics(v.organisation, count(v)) " +
+		       "    new com.info.model.SurveyAnswerStatistics(v.response,count(v)) " +
 		       "FROM " +
 		       "    Response v " +
 		       "GROUP BY " +
-		       "    v.organisation")
+		       "    v.organisation ,v.response")
 	public List<SurveyAnswerStatistics> findSurveyCount();	
 	
 	@Query("SELECT count(response) FROM Response ")	      
@@ -30,6 +31,21 @@ public interface ResponseRepository extends CrudRepository<Response, Serializabl
 		       "FROM " +
 		       "    Response v " + "WHERE "+ "response= :response ")
     public Response  findbyadress(@Param("response") String response) ;
+	@Query("SELECT " +
+		       "    new com.info.model.Response(v.response,v.organisation) " +
+		       "FROM " +
+		       "    Response v " + "WHERE "+ "organisation= :organisation ")
+	 public List<Response>  findbyOrganisation(@Param("organisation") String organisation) ;
+
+	
+	@Query("SELECT " +
+		       "    new com.info.model.Response(v.organisation,sum(size))" +
+		       "FROM " +
+		       "    Response v " +
+		       "GROUP BY  " +
+		       " organisation")
+	public List<Response> ressourcesParOrganisation();	
+	
 	
 	
 }

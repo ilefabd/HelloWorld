@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en" xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<head>
+	<title>Profil</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/registration.css}" />
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+  	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+  	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  	  	<object th:include="fragment/head :: head" th:remove="tag"></object>
+  	
+</head>
+<body class="page-container-bg-solid"  style="background-image: url('/img/grey.jpg');">
+	  	        <div th:include="/fragment/topmenuheader :: header"></div>
+
+	
+	<div class="container">
+		<div class="row">
+		
+						<aside id="aside" class="col-md-3">
+				
+		<div class="panel-group" style="margin-top:20px">
+		
+					<!-- Search -->
+					<div class="widget">
+						<div class="widget-search">
+						
+							
+						</div>
+					</div>
+					
+
+		</div>
+</aside>
+					<th:main id="main" class="col-md-9"  >
+
+		<div class="panel" style="margin-top:20px">
+
+			<div  style="margin-top:20px">
+				<form autocomplete="off" action="#" th:action="@{/profil}"
+					th:object="${user}" method="get" class="form-horizontal"
+					role="form">
+		<table class="table table-striped " >
+					
+				    <tr>
+				    	<td>Nom:</td>	
+				    	<td><label   th:text="${firstname}"  th:name = "orgres" th:type = "text" th:id = "${firstname}" 
+							th:value ="${firstname}">	</label>	
+						</td>
+									
+					</tr>                  
+					<tr >
+					    <td>Prénom:</td>	
+				    	<td><label   th:text="${name}"  th:name = "response" th:type = "text" th:id = "${name}" 
+							th:value ="${name}" >	</label>	
+						</td>
+					
+					</tr>
+					<tr >
+					    <td>Email:</td>	
+				    	<td><label   th:text="${email}"  th:name = "email" th:type = "text" th:id = "${email}" 
+							th:value ="${email}" >	</label>	
+						</td>
+					
+					</tr>
+									 <tr >
+					    <td>Organisation:</td>	
+				    	<td><label   th:text="${org}"  th:name = "email" th:type = "text" th:id = "${org}" 
+							th:value ="${org}" >	</label>	
+						</td>
+					
+					</tr>
+				  <tr>
+					<td>
+							
+    </td>        
+					<tr>
+					
+				
+					
+					</table>
+					
+
+					
+					
+					<span th:utext="${successMessage}"></span>
+					
+					
+				</form>
+			</div>
+		</div>
+		</th:main>
+		</div>
+		
+	</div>
+		        <div th:include="/fragment/homefooter :: footer"></div>
+
+</body>
+</html>

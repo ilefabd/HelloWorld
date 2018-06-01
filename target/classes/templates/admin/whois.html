@@ -18,41 +18,65 @@
 		<div class="row">
 		
 						<aside id="aside" class="col-md-3">
-				
-		<div class="panel-group" style="margin-top:20px">
-		
-					<!-- Search -->
-					<div class="widget">
+							<div class="widget">
 						<div class="widget-search">
-						<a th:href="@{/admin/home}"><img th:src="@{/img/home.png}"  ></a>
-				<label class="form-control"   th:text="${org}"  th:name = "orgres" th:type = "text" th:id = "${org}" 
-				th:value ="${org}" placeholder="whois">
-						
-					</label>		
+			
 						</div>
 						
+				</aside>
+		
+		
+		<th:main id="main" class="col-md-9"  >
+					<div class="panel-group" style="margin-top:20px">
+			
+			
+								<div class="panel panel-primary">
+									<div class="panel-heading">
+									<h4> WHOIS :<a th:text="${response}" ></a></h4>
+					
+									</div>
+
+		
+								</div>	
+						</div>
+						<div class="panel" style="margin-top:20px" >
+				
 						
-						<table class="table table-striped">
+						<table class="table table-striped" >
 					
 				    <tr>
-				    					<th>IP_Range</th>	
-				    										
-				    					<th>Organisation</th>	
-				    					
-										<th>Email</th>	
-										<th>Phone</th>
-											
-						
+				    	<td>Organisation:</td>	
+				    	<td><label   th:text="${org}"  th:name = "orgres" th:type = "text" th:id = "${org}" 
+							th:value ="${org}" placeholder="whois">	</label>	
+						</td>
+									
 					</tr>                  
 					<tr >
-					                 	<td th:text="${response}" th:value="${response}" ></td>
-					                    										
-										<td th:text="${org}" th:value="${org}"></td>
-										
+					    <td>Bloc IP:</td>	
+				    	<td><label   th:text="${response}"  th:name = "response" th:type = "text" th:id = "${response}" 
+							th:value ="${response}" >	</label>	
+						</td>
+					
+					</tr>
+					<tr >
+					    <td>Email:</td>	
+				    	<td><label   th:text="${email}"  th:name = "email" th:type = "text" th:id = "${email}" 
+							th:value ="${email}" >	</label>	
+						</td>
+					
+					</tr>
+									 <tr >
+					    <td>Téléphone:</td>	
+				    	<td><label   th:text="${phone}"  th:name = "email" th:type = "text" th:id = "${phone}" 
+							th:value ="${phone}" >	</label>	
+						</td>
+					
+					</tr>
+				  
 					        
 					
 					
-					</tr>
+				
 					
 					</table>
 					</div>
@@ -71,12 +95,11 @@
 					
 					<!-- Options -->
 					
-	
+</th:main>	
 </div>
-</aside>
 			
 		</div>
-	</div>
+
 		        <div th:include="/fragment/homefooter :: footer"></div>
 
 </body>

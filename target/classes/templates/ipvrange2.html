@@ -9,7 +9,7 @@
   	  	<object th:include="fragment/head :: head" th:remove="tag"></object>
   	
 </head>
-<body>
+<body style="background-image: url('/img/grey.jpg');" class="page-container-bg-solid" >
 			        <div th:include="fragment/topmenuheader :: header"></div>
 			        	<!-- Search -->
 					
@@ -20,53 +20,73 @@
 				
 					
 					
-		<div class="panel-group" style="margin-top:20px">
-																<a th:href="@{/admin/home}"><img th:src="@{/img/home.png}"  ></a>
-			
+		<div class="panel-group" style="margin-top:20px" >
+					<div class="panel panel-primary">
+		
+							<div class="widget">
+								<div class="widget-search">
+									<input class="search-input" type="text" placeholder="whois">
+									<button class="search-btn" type="button"><i class="fa fa-search"></i></button>
+								</div>
+							</div>
+							
+							<div class="widget">
+							
+								<h3 class="title">Options</h3>
+								<div class="widget-category">
+										 
+					
+					
+					
 				
-				
-					
-					
-					
-					
-						<ul class="main-nav nav navbar-nav ">
-					
-					
-					<li class="has-dropdown"><a>Ajouter une nouvelle ressource IP </a>
-						<ul class="dropdown">
-							<li><a th:href="@{/ip/ajouter}" > IPV4 </a></li>
-							<li><a th:href="@{/ip/ajouter}" > IPV6 </a></li>
+							<a th:href="@{/ip/ajouter}" > Ajouter une nouvelle ressource IP </a>
 							
+												 		<a th:href="@{/resourcesnondispo}"> Les ressources affectées</a>
 							
-							
-						</ul>
-					</li>
-				</ul>	
+					
 						
 						
 						
 					
 					
 					<!-- Options -->
+</div>
 					
+					<!-- Options -->
+					
+</div>	
+</div>					
 	
 </div>
 				</aside>
 	
 			<div class="col-md-9">
+			<div class="panel-group" style="margin-top:20px">
+			
+			
+								<div class="panel panel-primary">
+									<div class="panel-heading">
+									<h4>Ajouter IP-Range</h4>
+					
+									</div>
+
+		
+								</div>	
+						</div>
+									<div class="panel" style="margin-top:20px">
+						
 				<form autocomplete="off" action="#" th:action="@{/ip/{id}/}"
 					th:object="${iprange}" method="get" class="form-horizontal"
 					role="form">
 					
-					<h3>Les ressources disponibles</h3>
-					<table class="table " >
 					
+					<table class="table table-striped" >
 				    <tr>
 				    										
 				    					<th>Id</th>	
 										<th>IP-RANGE</th>	
 										<th>Range</th>
-						
+						<th></th>
 					</tr>                  
 					<tr th:each="c : ${Listip}" >
  
@@ -76,7 +96,8 @@
 									  <td th:text="${c.range}" th:value="${c.range}" th:field="*{range}"></td>
 										
 						<td>
-													<a th:href="@{'/ip/delete/' + ${c.id}}">delete</a>
+													<a th:href="@{'/ip/delete/' + ${c.id}}"><img th:src="@{/img/delete.png}"   
+									th:width= 40px th:height=30px align="right"></a>
 						
 						    </td>
 					
@@ -89,11 +110,10 @@
 					
 					
 				</form>
+				</div>
 			</div>
 		</div>
 	</div>
-
-		        <div th:include="/fragment/homefooter :: footer"></div>
 
 </body>
 </html>

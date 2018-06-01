@@ -15,7 +15,7 @@ public class Statistic {
 
 	private static final long serialVersionUID = -3009157732242241606L;
 	@Id
-	@GeneratedValue(strategy = GenerationType.AUTO)
+	@GeneratedValue(strategy = GenerationType.TABLE)
 	private long Stat_id;
 	
 	@Column(name="statistic_data")

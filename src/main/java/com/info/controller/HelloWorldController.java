@@ -14,24 +14,23 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.info.model.Customer;
-import com.info.repo.CustomerRepository;
+import com.info.model.Organisation;
+
+import com.info.repo.OrganisationRepository;
  
 
 @RestController
 public class HelloWorldController {
-	CustomerRepository repository;
+	@Autowired
+	OrganisationRepository repository;
 	
-	@RequestMapping("/save")
+	@RequestMapping("/organisation/save")
 	public String process(){
 		// save a single Customer
-		repository.save(new Customer("ileftest", "abde"));
 		
 		// save a list of Customers
-		repository.save(Arrays.asList(new Customer("ilef", "abderrahim"), new Customer("tarek", "ghodhbani"),
-										new Customer("touma", "abderrahim"), new Customer("tarek", "mansour")));
-		
-		return "Done";
+		repository.save(new Organisation((long) 1,"Orange",null, null, null, null));
+		return "done" ;
 	}
 	
 	
@@ -39,7 +38,7 @@ public class HelloWorldController {
 	public String findAll(){
 		String result = "";
 		
-		for(Customer cust : repository.findAll()){
+		for(Organisation cust : repository.findAll()){
 			result += cust.toString() + "<br>";
 		}
 		
@@ -47,17 +46,17 @@ public class HelloWorldController {
 	}
 	
 	@RequestMapping("/findbyid")
-	public String findById(@RequestParam("id") long id){
+	public String findById(@RequestParam("organisation") long id){
 		String result = "";
 		result = repository.findOne(id).toString();
 		return result;
 	}
 	
 	@RequestMapping("/findbylastname")
-	public String fetchDataByLastName(@RequestParam("lastname") String lastName){
+	public String fetchDataByLastName(@RequestParam("orgname") String org_name){
 		String result = "";
 		
-		for(Customer cust: repository.findByLastName(lastName)){
+		for(Organisation cust: repository.findByorgname(org_name)){
 			result += cust.toString() + "<br>"; 
 		}
 		
@@ -65,19 +64,18 @@ public class HelloWorldController {
 	}
 	
 @RequestMapping("/delete")
-public String deleteById(@RequestParam("id") long id) {
+public String deleteById(@RequestParam("organisation") long id) {
 	String result ="";
 	repository.delete(id);
 	return result="done";
 	
 }
 @RequestMapping("update")
-public String update(@RequestParam("id") long id) {
+public String update(@RequestParam("organisation") long id) {
 	
-Customer c = repository.findOne(id);
-c.setFirstName("dada");
-c.setLastName("bouazzi");
-repository.save(c);
+Organisation c = repository.findOne(id);
+
+;
 return "done";
 }
 @RequestMapping("subnet")

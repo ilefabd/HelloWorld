@@ -1,5 +1,6 @@
 package com.info.model;
 
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.Column;
@@ -18,8 +19,11 @@ import com.info.ip.Ipv4Range;
 
 @Entity
 @Table(name="ipv4range")
-public class Ipv4range {
+public class Ipv4range implements Serializable{
 	
+
+
+
 	@Id
 	@GeneratedValue(strategy=GenerationType.TABLE)
 	private Long id ;
